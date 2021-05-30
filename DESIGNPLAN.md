@@ -23,3 +23,6 @@ TextView & ScrollView| Here I will add the in-depth description/ingredients/inst
 HTML Formatting| I will format the TextView in a pleasant enough manner
 Web Links| I will embed links within the TextView (maybe to my YouTube channel for recipes that I have already demonstrated)
 Lesson 2
+Multiple Activities| Self explanatory
+Explicit Intents| I will use explicit intents to open and start other activities that belong to the apply
+Implicit Intents| Maybe I will open an implicit intent for the user to be able to e-mail me with any bugs that they might find.
