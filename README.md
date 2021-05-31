@@ -117,7 +117,7 @@ Lesson 8:
 - Use AlarmManager to schedule tasks based on real-time clock or on the elapsed time since boot.
 - Alarms do not fire in doze mode.
 - Use setAndAllowWhileIdle() or setExactAndAllowWhileIdle() to complete tasks while idle.
-- Use unexact time to reduce load of many actions happening at the same onOptionsItemSelected
+- Use inexact time to reduce load of many actions happening at the same onOptionsItemSelected
 - Use Pending intents to perform operations
 - Use JobScheduler to accomplish background services
 - Use JobInfo to set conditions to trigger the JobScheduler
