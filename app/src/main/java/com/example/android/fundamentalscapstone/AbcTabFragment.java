@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 public class AbcTabFragment extends Fragment {
 
-
     public AbcTabFragment() {
         // Required empty public constructor
     }
