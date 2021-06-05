@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.FundamentalsCapstone" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Theme.FundamentalsCapstone is the name of the style. It extends or refers to the this parent theme above.
+             I can then change or add style attributes below.-->
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +14,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle"> true</item>
     </style>
 </resources>

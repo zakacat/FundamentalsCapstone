@@ -109,3 +109,27 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 **May 31st / 2021**
 
 *I would like to import a similar table as the one listed above that references specific files for each component that I said I would add. I can include these different coordinating lists/tables in a separate file for ease of reading.*
+
+*I am now considering starting my project. I am not sure how I will start it... I think that maybe I should start with a tabbed activity for the main activity and then use a basic activity for the detail activity and then create the settings activity. I will need to review the content on tabs then. I may take the time to draw up some visualization for simplicity's sake.*
+
+*According to my table, tabs was covered in Lesson 4 in detail in 4.4 User Navigation... It actually starts as a Empty Activity. This will make for an easier start. I am wondering how difficult it will actually be to display these different RecyclerView items into several different tabs.*
+
+**June 6 / 2021**
+
+- *I should add that I also want to add a call and SMS function to the app. This will be a fairly simple implementation maybe included as a 'contact' section in the settings*
+
+- *I am going to continue with the steps of creating the main activity as a tabbed activity with fragments*
+
+- *I will need to name the a tabs as I create the fragments. For my app, I want the tabs to represent the same list of RecyclerView items but in a different order... I am thinking maybe 3 tabs is sufficient... Alphabetical, by Country alphabetical, and by Meal alphabetical (Breakfast, Lunch, Dinner, Snack)*
+
+- *I just thought that I would really like this app to be able to provide a shopping list after selecting the one meal or the many meals in the app.*
+
+- *"The adapter-layout manager pattern lets you provide different screens of content within an Activity"*
+
+- *FragmentStatePagerAdapter is deprecated. I will need to learn how to use FragmentStateAdapter eventually*
+
+- *When instantiating the PagerAdapter object, I need a FragmentManger object. I can call getSupportFragmentManager() to return the FragmentManger required for interacting with fragments in this activity... All these calls to background objects sometimes confuse me...*
+
+- *I followed the course description of setting up a tab layout. I made a couple small adjustments with the padding and I altered the text color of the tab text... However, much of this will change when I get to the part where I start adjusting the theme and fine tuning the design. I think I will save this for the end.*
+
+-
