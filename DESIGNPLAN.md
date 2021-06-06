@@ -114,7 +114,7 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 
 *According to my table, tabs was covered in Lesson 4 in detail in 4.4 User Navigation... It actually starts as a Empty Activity. This will make for an easier start. I am wondering how difficult it will actually be to display these different RecyclerView items into several different tabs.*
 
-**June 6 / 2021**
+**June 5 / 2021**
 
 - *I should add that I also want to add a call and SMS function to the app. This will be a fairly simple implementation maybe included as a 'contact' section in the settings*
 
@@ -132,4 +132,48 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 
 - *I followed the course description of setting up a tab layout. I made a couple small adjustments with the padding and I altered the text color of the tab text... However, much of this will change when I get to the part where I start adjusting the theme and fine tuning the design. I think I will save this for the end.*
 
--
+- *I think that I will try to add log statements for when the screen changes. Log statements are discussed in 1.1 of the course.*
+
+- *I reckon now I should start creating the list, which means the long process of making the Sql/Room database and incorporating it with RecyclerView and cards...*
+
+- *I am also contemplating ... I can't remember now... Oh yah, I was wondering for the sake of simplicity if I could make this internal calls to new objects that declare overridden methods in their own classes as to clean up the activity work space... I think that I would prefer it, but soon I will start to understand what everything means. (skeptical emoji)*
+
+- *Now I want to implement RecyclerView, Cards, and Room databasing, but I think that they should all be approached at the same time, so I think that I will follow step by step thru 10.1 of the course. I am going to try and make the adjustments as I see fit, but again I will try and leave most design choices to a later time unless they are structural in nature.*
+
+- *I am building the Recipe 'Entity' and now I must consider what information I want to store in the Recipe Entity which will in turn get stored in the Room database. I think I will need: Title, Brief Description, Ingredients w/ measurements, Ingredients w/o measurements, and somehow a picture would be nice. The picture may be to far out of the scope of my app though*
+
+- *Because my tabs lists are ordered, I will not be having the move the card option... or I can add it, but it will not save the information...*
+
+- *I will preload a bunch of recipes to showcase for the new user, but they will be able to easily and intuitively add and delete recipes. The Region selector will be a spinner and the meal type will be a radio button which will both save as ints to restrict the user input.*
+
+- *(0 = Breakfast, 1 = Lunch, 2 = Supper, 3 = Snack) Meal Types*
+
+- *(0 = North America, 1 = Central America, 2 = South America, 3 = Western Europe, 4 = Eastern Europe, 5 = Middle East, 6 = Western Asia, 7 = Eastern Asia, 8 = Oceania) Region of Origin*
+
+- *I will need to come back later I think and add the search querires to return for the separate ingredients... or maybe not... I am not sure. This app is already becoming quite complicated*
+
+- *I am almost certain that I need to wrap all the Dao list returns with a LiveDate<>*
+
+- *Migration would be necessary for an app that will be updated and the user information should be saved into the new versions. I will not need migration for this. I can use the destructive migration instead as I am not concerned about saving user data over Room database changes.*
+
+**June 6 / 2021**
+
+- *It takes quite a while to write out all the documentation, and I have yet to find the zone where I can get a whole bunch of stuff done. I am still working on the Room process and I am on the part of making the repository*
+
+- *I shouldn't have to pass in any info to return the lists as I want them to... They should be in the same order evertime...so how do I order by a category AND then by Title alphabetically????*
+
+- *"Never pass context into ViewModel instances. Do not store Activity, Fragment, or View instances or their context in the View Model."*
+
+- *I have created the files from the database up, and now I must create the cards that I will be using and the RecyclerView as I would like to view them in the fragments...*
+
+- *I was tripped up for a bit. In the text, the recyclerView is displayed in the mainactivity, but now I have tabs with fragments to display the separate lists. I needed to import the similar RecyclerView and adapter statement into the fragment class to display is properly.*
+
+- *I have been able to stumble thru again and get a rough version of the list to produce. It actually doesn't look too bad. Hopefully while I tweak with it a bit, I will understand a bit more how everything works.*
+
+- *To respond to myself, I found out how to sort by two categories, I put a comma and the second caegory after ASC or whichever @Query organizer term that I try to use*
+
+- *I am now successful in displaying the different list representations in the separate fragments in the tab view. It looks good. I am really itching to change the color scheme and stuff, but I don't think there is much point doing it now at the beginning. Now, that I know my definite regions and meals, I would like to color code them as well, to really make them pop in the app. I think that I can also address this programmatically in  RecipeListAdapter.java. Now, I am wondering if I can alter different UI aspects of the cards for each generated list. Right now the cards individually will look the same in which ever list is displayed, but it would be cool to only color the sections in the tab that it is important. A gradient for ABC. Color code of 9 colors for region, and color code of 4 colors for meals*
+
+- *I am content. I suppose that I am going to go for a run*
+
+- *I am leaving off at 10.1 Task 12

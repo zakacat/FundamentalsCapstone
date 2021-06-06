@@ -15,29 +15,29 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class AbcTabFragment extends Fragment {
+
+public class RegionTabFragment extends Fragment {
 
     private RecipeViewModel mRecipeViewModel;
 
-    public AbcTabFragment() {
+    public RegionTabFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //Remember to create the view first, and then we can assign view widgets and adjust them as such...
+        View regionFragment = inflater.inflate(R.layout.fragment_abc_tab, container, false);
 
-        View abcFragment = inflater.inflate(R.layout.fragment_abc_tab, container, false);
-
-        RecyclerView recyclerView = abcFragment.findViewById(R.id.abc_recyclerview);
-        final RecipeListAdapter adapter = new RecipeListAdapter(abcFragment.getContext());
+        RecyclerView recyclerView = regionFragment.findViewById(R.id.abc_recyclerview);
+        final RecipeListAdapter adapter = new RecipeListAdapter(regionFragment.getContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(abcFragment.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(regionFragment.getContext()));
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
-        mRecipeViewModel.getAllRecipesABC().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+        mRecipeViewModel.getAllRecipesRegion().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable final List<Recipe> recipes) {
                 // Update the cached copy of the words in the adapter.
@@ -46,6 +46,6 @@ public class AbcTabFragment extends Fragment {
         });
 
 
-        return abcFragment;
+        return regionFragment;
     }
 }

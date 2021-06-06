@@ -29,7 +29,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return new AbcTabFragment();
             }
             case 1 : {
-                return new CountryTabFragment();
+                return new RegionTabFragment();
             }
             case 2 : {
                 return new MealTabFragment();
