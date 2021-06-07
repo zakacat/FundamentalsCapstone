@@ -27,7 +27,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/black"></com.google.android.material.tabs.TabLayout>
+        app:tabTextColor="@color/black" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

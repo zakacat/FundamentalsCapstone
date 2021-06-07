@@ -1,13 +1,19 @@
 package com.example.android.fundamentalscapstone;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 import com.google.android.material.tabs.TabLayout;
@@ -72,7 +78,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // I can programmatically remove the add option like this >>> menu.removeItem(R.id.menu_add); >>> nice
+        return true;
+    }
+    //Here is where I can add the intents for the dialogs and activities...
+    //A dialog for add, an activity for settings (see the text), a dialog for about, and a dialog (for practice) or acitivity for feedback.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add: {
+                //I will come back here and add the intent or whatever that is needed to start the dialog.
+                DialogFragment addRecipeDialog = new AddRecipeFragment();
+                addRecipeDialog.show(getSupportFragmentManager(), "Add");
+                return true; //no need for break statements as return statements also exit the switch block
+            }
+            case R.id.menu_settings: {
+                return true;
+            }
+            case R.id.menu_about: {
+                return true;
+            }
+            case R.id.menu_feedback: {
+                return true;
+            }
+            default:
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

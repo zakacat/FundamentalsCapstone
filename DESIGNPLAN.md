@@ -176,4 +176,20 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 
 - *I am content. I suppose that I am going to go for a run*
 
-- *I am leaving off at 10.1 Task 12
+- *I am leaving off at 10.1 Task 12*
+
+- *Now, I think that I would like to polish up this a bit. I have options to add the add activity... which maybe be fine as an activity... or I can add it as a dialog. I would also like to import a picture  - one for each recipe. I would like to make it part of creation process, and it could be visible in the card and at the beginning of the detail activity.*
+
+- *I am going to start by creating the appbar to have options in the overflow menu that includes add and settings, etc. Then I will create a dialog fragment that opens upon clicking add in the appbar. Then I will include the EditText fields and the radio button and spinner that will be required to create a new recipe object and add it to the database.*
+
+- *I created a menu file with menu items, added icons and set their visibiltity... I think that I can remove the add option programmatically in other activities as I don't want the add option to be available outside of the main activitity. Then I must add onOptionsItemSelected().*
+
+- *Now to the dialog portion in the 4.3 of the text and then I will merge this info with the 10.1 adding recipes.*
+
+- *To implement the app bar menu, after creating the menu resource file, I also need to Override onCreateOptionsMenu() and onOptionsItemSelected() in all the activities that I want menu to appear.*
+
+- *Now I am creating the dialog to handle the process of adding a recipe to the database. Will it be saved??? So I will set up how the dialog looks in the layout file first. Then the layout file gets referenced during inflation in onCreateView() in the addRecipeFragment.*
+
+- *The add recipe layout looks fine, but I need to adjust the radio buttons as they are currently overflowing.*
+
+- *That is it for tonight*
