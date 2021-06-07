@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = Recipe.class, version = 1, exportSchema = false)
+@Database(entities = Recipe.class, version = 2, exportSchema = false)
 public abstract class RecipeRoomDatabase extends RoomDatabase {
 
     public abstract RecipeDao recipeDao();
@@ -25,9 +25,9 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                             // Wipes and rebuilds instead of migrating
                             // if no Migration object.
                             // Migration is not part of this practical.
-                            .fallbackToDestructiveMigration()
                             // I am not quite sure how this will affect my app.
                             .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
 
                 }
@@ -55,8 +55,6 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-
-            mDao.deleteAll();
 
             mDao.insert(new Recipe("Eggs and Toast", "Delicate Eggs on delicate toast", "2 eggs /n 2 pieces of toast /n 1 spoon of butter", "eggs, bread, butter", "Fry eggs and put atop toast", 0 , 0));
             mDao.insert(new Recipe("Cereal", "Scrumtious Cereal", "", "", "", 1 , 3));

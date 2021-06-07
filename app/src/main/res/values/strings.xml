@@ -5,4 +5,16 @@
     <string name="tab_label1">Abc</string>
     <string name="tab_label2">Region</string>
     <string name="tab_label3">Meal</string>
+    <string-array name="region_array">
+        <item>North America</item>
+        <item>Central America</item>
+        <item>South America</item>
+        <item>Western Europe</item>
+        <item>Eastern Europe</item>
+        <item>Middle East</item>
+        <item>Western Asia</item>
+        <item>Eastern Asia</item>
+        <item>Oceania</item>
+    </string-array>
+
 </resources>

@@ -193,3 +193,17 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 - *The add recipe layout looks fine, but I need to adjust the radio buttons as they are currently overflowing.*
 
 - *That is it for tonight*
+
+**June 7 / 2021**
+
+- *My DesignPlan.md has turned more into a stream of consciousness more than anything... This morning I am going to work on implementing everything to add the recipe to the database. I will first need to make a string array for the regions that match my number system that I have already laid out above. Then I will need to handle the user information, convert it as necessary, and insert() it into the database. I am not sure if it will reload on reset or not. I think the setting in the database where I erase the db and reinstantiate the starter data will erase the user input.*
+
+- *Spinner and Array adapter can be found in 4.2 Task 3. First is to create the string array in string.xml.*
+
+- *I have incorporated java doc comments to highlight each section in the onCreateView, but now I think that I will need to move the majority of it to a separate method as the add button is called.*
+
+- *I got the add dialog to work properly. Now i am trying to add a check for the Recipe title as it cannot match another title or the app will crash (Because of the primary key thing). I am wondering how I can access the titles with LiveData<List<Recipe>>. I can get it easy enough with just the list. I dound a way easier way to implement and that is to use ... @Insert (onConflict = OnConflictStrategy.REPLACE).*
+
+- *Finding this (which is actually clearly mentioned in the text) solved several issues that I was having, like the app crashing when erasing the call for mDao to delete all...*
+
+- *Well, I am going to commit this and then go for a run. What part should I work on next??? I think that I should either add the ability to delete... or I can work on the Recipe Detail activity. I could also clean up the code that I have, really just the add dialog fragment. I really like how this dialog turned out, and it will look even better when I add the themes and the ability to import a picture somehow.*
