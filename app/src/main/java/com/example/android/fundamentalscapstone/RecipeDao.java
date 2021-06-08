@@ -2,6 +2,7 @@ package com.example.android.fundamentalscapstone;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -11,11 +12,15 @@ import java.util.List;
 @Dao
 public interface RecipeDao {
 
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    void insert (Recipe recipe);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Recipe recipe);
 
     @Query("DELETE FROM recipe_table")
     void deleteAll();
+
+    @Delete
+    void deleteRecipe(Recipe recipe);
+
 
     @Query("SELECT * from recipe_table ORDER BY Title ASC")
     LiveData<List<Recipe>> getAllRecipesABC();
@@ -30,4 +35,8 @@ public interface RecipeDao {
     //I will now need to restrict the user selection, so maybe a radio button is preferred upon generation.
     @Query("SELECT * from recipe_table ORDER BY `Type of Meal` ASC, Title")
     LiveData<List<Recipe>> getAllRecipesMeal();
+
+    @Query("SELECT * from recipe_table LIMIT 1")
+    Recipe[] getAnyRecipe();
+
 }

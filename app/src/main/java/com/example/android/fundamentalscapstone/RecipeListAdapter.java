@@ -1,12 +1,14 @@
 package com.example.android.fundamentalscapstone;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -29,14 +31,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        if (mRecipes!= null) {
+        if (mRecipes != null) {
             Recipe current = mRecipes.get(position);
             holder.recipeTitleView.setText(current.getTitle());
             holder.recipeDescriptionView.setText(current.getBriefDescription());
 
             //I may need to copy this switch block several times...
             String region;
-            switch (current.getRegionOfOrigin()){
+            switch (current.getRegionOfOrigin()) {
                 case 0:
                     region = "North America";
                     break;
@@ -84,7 +86,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 case 3:
                     meal = "Snack";
                     break;
-                default :
+                default:
                     meal = "no data";
             }
             holder.recipeMealView.setText(meal);
@@ -104,7 +106,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
 
-
     // getItemCount() is called many times, and when it is first called,
     // mRecipes has not been updated (means initially, it's null, and we can't return null)
     @Override
@@ -116,7 +117,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder {
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
         private final TextView recipeTitleView, recipeDescriptionView, recipeRegionView, recipeMealView;
 
         private RecipeViewHolder(View itemView) {
@@ -126,5 +127,22 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             recipeRegionView = itemView.findViewById(R.id.card_region);
             recipeMealView = itemView.findViewById(R.id.card_meal);
         }
+
+        @Override
+        public boolean onLongClick(View v) {
+            //Here is where I want to create the context menu with the option to delete
+            return true; //Changing this to true means that the system assumes that the lonCLick has been handled. If false, then other actions may be taken... like click.
+        }
+
+        @Override
+        public void onClick(View v) {
+            //And here is where I can add the intent to open the detail activity while sending in the
+            //the recipe that got clicked as to pass the information into that activity.
+        }
     }
+
+    public Recipe getRecipeAtPosition(int position) {
+        return mRecipes.get(position);
+    }
+
 }

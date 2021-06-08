@@ -207,3 +207,9 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 - *Finding this (which is actually clearly mentioned in the text) solved several issues that I was having, like the app crashing when erasing the call for mDao to delete all...*
 
 - *Well, I am going to commit this and then go for a run. What part should I work on next??? I think that I should either add the ability to delete... or I can work on the Recipe Detail activity. I could also clean up the code that I have, really just the add dialog fragment. I really like how this dialog turned out, and it will look even better when I add the themes and the ability to import a picture somehow.*
+
+- *I am going to work on the ability to delete the cards, so there is atleast user control of the database.*
+
+- *Section 10.1 Part B discusses in depth the ability to delete all recipes and delete just one card/recipe*
+
+- *I am a bit confused on how I am going to implement the ability to delete one recipe at a time. I want to add a context menu, but I am not sure where I should do that... I think that I need to take a break... I did lots. I left off at 10.1 Part B Task 5.*
