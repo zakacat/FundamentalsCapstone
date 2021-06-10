@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -24,9 +25,11 @@ import java.util.List;
 
 public class AbcTabFragment extends Fragment {
 
-
-
+    private RecipeListAdapter mAdapter;
     private RecipeViewModel mRecipeViewModel;
+    private View abcFragment;
+
+    private static final String LOG_TAG = AbcTabFragment.class.getSimpleName();
 
     public AbcTabFragment() {
         // Required empty public constructor
@@ -38,11 +41,11 @@ public class AbcTabFragment extends Fragment {
         // Inflate the layout for this fragment
         //Remember to create the view first, and then we can assign view widgets and adjust them as such...
 
-        View abcFragment = inflater.inflate(R.layout.fragment_abc_tab, container, false);
+        abcFragment = inflater.inflate(R.layout.fragment_abc_tab, container, false);
 
         RecyclerView recyclerView = abcFragment.findViewById(R.id.abc_recyclerview);
-        final RecipeListAdapter adapter = new RecipeListAdapter(abcFragment.getContext());
-        recyclerView.setAdapter(adapter);
+        mAdapter = new RecipeListAdapter(abcFragment.getContext());
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(abcFragment.getContext()));
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
@@ -50,10 +53,32 @@ public class AbcTabFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final List<Recipe> recipes) {
                 // Update the cached copy of the words in the adapter.
-                adapter.setRecipesAbc(recipes);
+                mAdapter.setRecipesAbc(recipes);
             }
         });
+        registerForContextMenu(recyclerView);
 
         return abcFragment;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position = -1;
+        try {
+            position = mAdapter.getPosition();
+        } catch (Exception e) {
+            return super.onContextItemSelected(item);
+        }
+        if(getUserVisibleHint()) {
+            if (item.getItemId() == R.id.menu_delete) {
+                //Delete the recycler view at this position.
+                int myPosition = mAdapter.getPosition();
+                Recipe myRecipe = mAdapter.getRecipeAtPosition(myPosition);
+                mRecipeViewModel.deleteRecipe(myRecipe);
+                Log.d(LOG_TAG, "Deleted a recipe from AbcTabFragment.");
+            }
+        }
+
+        return super.onContextItemSelected(item);
     }
 }

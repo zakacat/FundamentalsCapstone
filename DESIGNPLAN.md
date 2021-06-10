@@ -213,3 +213,13 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 - *Section 10.1 Part B discusses in depth the ability to delete all recipes and delete just one card/recipe*
 
 - *I am a bit confused on how I am going to implement the ability to delete one recipe at a time. I want to add a context menu, but I am not sure where I should do that... I think that I need to take a break... I did lots. I left off at 10.1 Part B Task 5.*
+
+**June 8 / 2021**
+
+- *I have been tumbling over this concept in my head over the day at work, and I reckon that is a good thing. I coudln't think about it too much, but I did know that I wanted to hop on the computer for some time at the end of the day. That is a good feeling to have. I wasn't quite sure how to implement the context menu with the recycler View, but it looks like I can implement it within the View Holder class according to a Stack Overflow inquiry (not by me).*
+
+- *I was only somewhat able to get it... I could make it so that I created a context menu on long click of the recipe card and then I could also delete it, but because I have 3 versions of the recycler view representing my cards over 3 fragments in the tabs. There were some issues with deleting the cards, where sometimes, 2 would dissapear, 3 would disappear, on none would. I think this must have to do with the whole getPosition way of interaction that exists with the view holder and binder thingy. I should do a bit more research, I reckon.*
+
+**June 9 / 2021**
+
+- *I found a solution online as it was similar to a check that I had tried. I tried to use hadfocus() but instead I used getUserVisibleHint(), which is deprecated but it worked in away to ensure that only one instance of onContextItemSelected() acted on the code to delete. It now works smoothly. I still need to understand exactly what is happening, but I had a decent understanding I think.*

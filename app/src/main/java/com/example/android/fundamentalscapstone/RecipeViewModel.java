@@ -40,6 +40,6 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void deleteAll() {mRepository.deleteAll();}
 
-    public void deleteWord(Recipe recipe) {mRepository.deleteWord(recipe);}
+    public void deleteRecipe(Recipe recipe) {mRepository.deleteRecipe(recipe);}
 
 }

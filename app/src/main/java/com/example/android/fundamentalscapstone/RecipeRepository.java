@@ -70,7 +70,7 @@ public class RecipeRepository {
         }
     }
 
-    public void deleteWord(Recipe recipe) {
+    public void deleteRecipe(Recipe recipe) {
         new deleteRecipeAsyncTask(mRecipeDao).execute(recipe);
     }
 

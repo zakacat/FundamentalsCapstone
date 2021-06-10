@@ -3,30 +3,48 @@ package com.example.android.fundamentalscapstone;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder> {
 
     private final LayoutInflater mInflater;
     private List<Recipe> mRecipes;
+    private MenuInflater mMenuInflater;
+    private int position;
 
     RecipeListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        mMenuInflater = new MenuInflater(context);
     }
+
+
 
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.list_item, parent, false);
         return new RecipeViewHolder(itemView);
+    }
+
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
@@ -97,7 +115,20 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             holder.recipeRegionView.setText("no data");
             holder.recipeMealView.setText("no data");
         }
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setPosition(holder.getPosition());
+                return false;
+            }
+        });
 
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RecipeViewHolder holder) {
+        holder.itemView.setOnLongClickListener(null);
+        super.onViewRecycled(holder);
     }
 
     void setRecipesAbc(List<Recipe> recipes) {
@@ -117,7 +148,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         private final TextView recipeTitleView, recipeDescriptionView, recipeRegionView, recipeMealView;
 
         private RecipeViewHolder(View itemView) {
@@ -126,19 +157,15 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             recipeDescriptionView = itemView.findViewById(R.id.card_brief_description);
             recipeRegionView = itemView.findViewById(R.id.card_region);
             recipeMealView = itemView.findViewById(R.id.card_meal);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
-        public boolean onLongClick(View v) {
-            //Here is where I want to create the context menu with the option to delete
-            return true; //Changing this to true means that the system assumes that the lonCLick has been handled. If false, then other actions may be taken... like click.
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            mMenuInflater.inflate(R.menu.menu_delete, menu);
         }
 
-        @Override
-        public void onClick(View v) {
-            //And here is where I can add the intent to open the detail activity while sending in the
-            //the recipe that got clicked as to pass the information into that activity.
-        }
+
     }
 
     public Recipe getRecipeAtPosition(int position) {

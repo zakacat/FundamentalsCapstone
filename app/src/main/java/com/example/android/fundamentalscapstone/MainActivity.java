@@ -22,14 +22,14 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private RecipeViewModel recipeViewModel;
+    private RecipeViewModel mRecipeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.menu_clear_all: {
-                recipeViewModel.deleteAll();
+                mRecipeViewModel.deleteAll();
                 return true;
             }
             default:
@@ -120,5 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
