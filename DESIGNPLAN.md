@@ -223,3 +223,27 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 **June 9 / 2021**
 
 - *I found a solution online as it was similar to a check that I had tried. I tried to use hadfocus() but instead I used getUserVisibleHint(), which is deprecated but it worked in away to ensure that only one instance of onContextItemSelected() acted on the code to delete. It now works smoothly. I still need to understand exactly what is happening, but I had a decent understanding I think.*
+
+**June 10 / 2021**
+
+- *The next step will be to start working on the Detail Activity, which will give all the information about the Recipe. I would also, at some point, like to include the image to be added using Glide and a tansition as was demonstrated in the codelabs. I hope that it is pretty easy to implement the onClick to open the activity. I am not sure what I should work on after that? Maybe the settings? I think that I should update my table and clean and document my code thusfar... starting this weekend, not today.*
+
+**June 12 / 2021**
+
+- *This morning, I will start working on the Detail Activity that will show all the information about the recipe.*
+
+- *I think that I want to also create an attribute for the entitiy for including the recipe on the shopping list. I think a boolean (onShoppingList) should be enough, and then within the detail activity, the user can add the recipe to the soppping list if they so choose to do so.*
+
+- *Is I have the time, I should also add dialogs to make sure that the user wants to delete the cards.*
+
+- *I think that I should add the onClick call in the adapter alongside the onLongClick in onBindViewHolder... with an intent that passes in the recipe to the detail activity.*
+
+- *startActivity() is not recognized. Do I need to add an import?*
+
+- *I think becuase I am not modifing the list, I don't nedd to go thru the hierarchy and I can use the DAO directly to accessa recipe... The easiest way was to pass it up the hierarchy as each constructor instantiates the class below it, creating indirect access. This is easier than trying to find direct access to the specific instances*
+
+- *I return the recipe thru the viewmodel by creating a method to retrieve a single recipe and sending this thru the intent. But now the compiler is saying that I can not run this on the main thread. Hmmm, I think that I will create e anew Async task then to retrieve this recipe... I am stuck with "Caused by: java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time." and I have tried several times to get this method to call in the background...*
+
+- *In the end, I had needed to instantiate an observer for the livedata to alter the textviews as required in the onChanged method call... Sometimes, I get caught up in the attempts and I just keep trying things without full thought until I get something going*
+
+- *I should be documenting as I go, but I am not. I think that now that I am this stage, I should maybe stop, organize my files, document them to the best of my knowledge, and maybe draw some diagrams to represent the logic flow of my app thus far...* 

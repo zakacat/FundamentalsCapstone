@@ -64,8 +64,7 @@ public class MealTabFragment extends Fragment {
         if (getUserVisibleHint()) {
             if (item.getItemId() == R.id.menu_delete) {
                 //Delete the recycler view at this position.
-                int myPosition = mAdapter.getPosition();
-                Recipe myRecipe = mAdapter.getRecipeAtPosition(myPosition);
+                Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
                 mRecipeViewModel.deleteRecipe(myRecipe);
                 Log.d(LOG_TAG, "Deleted a recipe from MealTabFragment.");
             }

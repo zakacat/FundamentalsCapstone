@@ -69,11 +69,12 @@ public class AbcTabFragment extends Fragment {
         } catch (Exception e) {
             return super.onContextItemSelected(item);
         }
+        //This is deprecated, but it this the integral part of checking what tab the user is interacting with.
+        //Without this, there are some  strange errors that occur with multiple deletions over the list.
         if(getUserVisibleHint()) {
             if (item.getItemId() == R.id.menu_delete) {
                 //Delete the recycler view at this position.
-                int myPosition = mAdapter.getPosition();
-                Recipe myRecipe = mAdapter.getRecipeAtPosition(myPosition);
+                Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
                 mRecipeViewModel.deleteRecipe(myRecipe);
                 Log.d(LOG_TAG, "Deleted a recipe from AbcTabFragment.");
             }

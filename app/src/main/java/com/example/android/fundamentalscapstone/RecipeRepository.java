@@ -33,6 +33,8 @@ public class RecipeRepository {
         return mAllRecipesMeal;
     }
 
+    LiveData<Recipe> getRecipe(String title) {return mRecipeDao.getRecipe(title);}
+
     public void insert(Recipe recipe) {
         new insertAsyncTask(mRecipeDao).execute(recipe);
     }
@@ -88,5 +90,7 @@ public class RecipeRepository {
             return null;
         }
     }
+
+
 
 }

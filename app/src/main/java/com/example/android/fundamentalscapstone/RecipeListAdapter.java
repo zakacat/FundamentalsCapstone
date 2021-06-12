@@ -1,6 +1,8 @@
 package com.example.android.fundamentalscapstone;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -120,6 +123,15 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             public boolean onLongClick(View v) {
                 setPosition(holder.getPosition());
                 return false;
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Add the intent for opening the detail activity.
+                Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_RECIPE_PRIMARY_KEY, mRecipes.get(position).getTitle());
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 

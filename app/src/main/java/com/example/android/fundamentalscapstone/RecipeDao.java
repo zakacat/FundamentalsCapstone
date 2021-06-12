@@ -39,4 +39,7 @@ public interface RecipeDao {
     @Query("SELECT * from recipe_table LIMIT 1")
     Recipe[] getAnyRecipe();
 
+    @Query("Select * from recipe_table WHERE title = :title")
+    LiveData<Recipe> getRecipe(String title);
+
 }
