@@ -8,10 +8,14 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
-
+//Database Access Object for the recipes. All these methods must all be annotated with Room annotations.
+//These current methods are only dealing with the recipes directly, so anything further donw the
+//hierarchy is dealing with recipe objects.
 @Dao
 public interface RecipeDao {
 
+    //This conflict strategy for inserting a new recipe with the same name/passkey. The new one
+    //overwrites the old one.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Recipe recipe);
 
@@ -20,8 +24,9 @@ public interface RecipeDao {
 
     @Delete
     void deleteRecipe(Recipe recipe);
-
-
+    //LiveData is used with retrieving Recipes for two reasons. 1. There are methods for observation
+    //the information in real time (like a listener) 2. Actions based on the information should not
+    //be done in the main thread and LiveData can do processes in the background.
     @Query("SELECT * from recipe_table ORDER BY Title ASC")
     LiveData<List<Recipe>> getAllRecipesABC();
 
@@ -36,6 +41,8 @@ public interface RecipeDao {
     @Query("SELECT * from recipe_table ORDER BY `Type of Meal` ASC, Title")
     LiveData<List<Recipe>> getAllRecipesMeal();
 
+    //This method is called only once in the database to confirm whether the database is empty or not
+    // to decide whether to instantiate starter data or not.
     @Query("SELECT * from recipe_table LIMIT 1")
     Recipe[] getAnyRecipe();
 

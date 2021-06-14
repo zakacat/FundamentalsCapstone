@@ -19,13 +19,15 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-
+//This is the fragment which displays the recipe creator dialog.
 public class AddRecipeFragment extends DialogFragment {
 
     private View mAddRecipeDialog;
 
     public AddRecipeFragment() {
         // Required empty public constructor
+        //Nothing happens directly with the constructor. These overridden methods take
+        //care of business.
     }
 
     @Override
@@ -38,6 +40,8 @@ public class AddRecipeFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         //Creating the view from which all the view elements will refer from
         mAddRecipeDialog = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+
+        //Adding buttons programatically and handling them with private methods.
         Button addButton = mAddRecipeDialog.findViewById(R.id.add_recipe_add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,40 +115,15 @@ public class AddRecipeFragment extends DialogFragment {
          */
         //Recognizing the spinner and using an array adapter to read the information.
         Spinner regionSpinner = mAddRecipeDialog.findViewById(R.id.add_recipe_spinner);
-        //Creating the onItemSelectedListener. This is where I will react to the code...
-        //I actually don't think that I need the listener as this does not need to be actively
-        //listened to. Only registered when the add button is clicked.
-//        if (regionSpinner != null) {
-//            regionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    //Here I think that I can simply save the position to a member variable and save that directly elsewhere as
-//                    //my position id as an int is the same as how I have imagined the storage.
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {
-//
-//                }
-//            });
-//        }
-//        //Creating the ArrayAdapter that references my string array and the default layout
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.region_array, android.R.layout.simple_spinner_item);
-//        //Specifying the layout to use when the list of choices appear.
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        //and one last null check
-//        if (regionSpinner != null) {
-//            regionSpinner.setAdapter(adapter);
-//    }
-        //^^^This is only needed if I want to assign things programmatically, but it can be handled in the layout, me thinks.
         region = regionSpinner.getSelectedItemPosition();
+
         /** This block is for handling the BriefDescription EditText
          */
         EditText briefDescriptionEditText = mAddRecipeDialog.findViewById(R.id.add_recipe_brief_description);
         if (briefDescriptionEditText.getText() != null) {
             briefDescription = briefDescriptionEditText.getText().toString();
         } else {
-            //assign ""
+            //assign "". An Empty string is easier to handle than a null return.
             briefDescription = "";
         }
 
@@ -178,7 +157,8 @@ public class AddRecipeFragment extends DialogFragment {
          //Using the ViewModel as it is the highest level of access.
         //Here I am trying to add a check to make sure that the title doesn't match another recipe.
         //Because it is also the primary key, the app will crash if I don't do this check and the same
-        //recipe is created twice. Maybe I will come back to this.
+        //recipe is created twice. Maybe I will come back to this. *I figured this out somewhere else.
+        //I was able to add a conflict strategy to the DAO.
         RecipeViewModel newRecipe = ViewModelProviders.of(this).get(RecipeViewModel.class);
         newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType));
 
@@ -189,5 +169,4 @@ public class AddRecipeFragment extends DialogFragment {
         onStop();
     }
 
-    //I think that I can add a call directly in here to add the Recipe to the database.
 }

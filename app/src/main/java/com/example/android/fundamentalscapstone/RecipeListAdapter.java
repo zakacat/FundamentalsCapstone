@@ -1,39 +1,37 @@
 package com.example.android.fundamentalscapstone;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
+//The RecipeListAdapter is what handles the items in the recyclerview.
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder> {
 
     private final LayoutInflater mInflater;
     private List<Recipe> mRecipes;
     private MenuInflater mMenuInflater;
-    private int position;
+    private int mPosition;
 
+    //Creating a RecipeListAdapter from the context parameter and creating the layout inflater
+    //and menu inflater from the context.
     RecipeListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         mMenuInflater = new MenuInflater(context);
     }
 
-
-
+    //This method takes the viewgroup from the context layout file and the viewType as an int... but
+    //then this is cast as a View when a RecipeViewHolder is created to be returned?
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,15 +39,19 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         return new RecipeViewHolder(itemView);
     }
 
-
+    //Get the position of the item in the list.
     public int getPosition() {
-        return position;
+        return mPosition;
     }
 
+    //Set the position of the item.
     public void setPosition(int position) {
-        this.position = position;
+        this.mPosition = position;
     }
 
+    //onBindViewHolder takes the holder object and the position and finds the Recipe
+    //object (representation from the database) and then modifies the card view widgets to
+    //displayed in the card in recycler view in the tab fragments.
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         if (mRecipes != null) {
@@ -58,6 +60,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             holder.recipeDescriptionView.setText(current.getBriefDescription());
 
             //I may need to copy this switch block several times...
+            //And again it may have been easier to just assign a string from user input! But
+            //I did want to demonstrate that I could work with other datatypes.
             String region;
             switch (current.getRegionOfOrigin()) {
                 case 0:
@@ -118,6 +122,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             holder.recipeRegionView.setText("no data");
             holder.recipeMealView.setText("no data");
         }
+
+        //This is the listener that will handle the longclick. It simply updates the position from
+        //the holder. (I tried to delete this as I thought the onCreateContextMenu would handle the
+        //the long clicks, and it kinda does but ther was an of by one error visible in the region
+        // tab). I am wondering why I can't handle this within the holder private class?
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -125,6 +134,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 return false;
             }
         });
+
+        //This is definitely needed. as a short click uses an intent to open the recipe detail
+        //activity. Only the recipe title is passed in, as a reference to the Recipe object cannot
+        //be passed in with this method.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,13 +149,17 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         });
 
     }
-
+    //This Recycles the view and resets the onLongClickListener???? I am not sure what is happening
+    //here.
     @Override
     public void onViewRecycled(@NonNull RecipeViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
         super.onViewRecycled(holder);
     }
 
+    //I need to change this name as it alludes to it being only ABC, but this is called to
+    //display all the recipes accordingly of how they are pulled from the ViewModel in the fragement
+    //whether it is the ABC or Region or Meal.
     void setRecipesAbc(List<Recipe> recipes) {
         mRecipes = recipes;
         notifyDataSetChanged();
@@ -160,6 +177,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
+    //I think that this is used as the holder for the itemVIew. which is passed in during
+    //during onCreateViewHolder. It recognizes the different components of the item view and
+    //assign a menuinflater to go with the holder.
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         private final TextView recipeTitleView, recipeDescriptionView, recipeRegionView, recipeMealView;
 
@@ -180,6 +200,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     }
 
+    //Getter for recipe position.
     public Recipe getRecipeAtPosition(int position) {
         return mRecipes.get(position);
     }

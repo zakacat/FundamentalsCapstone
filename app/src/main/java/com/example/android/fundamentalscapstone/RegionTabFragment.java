@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-
+//Refer to AbcTabFragment for details.
 public class RegionTabFragment extends Fragment {
 
     private RecipeViewModel mRecipeViewModel;
@@ -34,9 +34,9 @@ public class RegionTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        regionFragment = inflater.inflate(R.layout.fragment_region_tab, container, false);
+        regionFragment = inflater.inflate(R.layout.fragment_tab_recyclerview, container, false);
 
-        RecyclerView recyclerView = regionFragment.findViewById(R.id.region_recyclerview);
+        RecyclerView recyclerView = regionFragment.findViewById(R.id.tab_recyclerview);
         mAdapter = new RecipeListAdapter(regionFragment.getContext());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(regionFragment.getContext()));

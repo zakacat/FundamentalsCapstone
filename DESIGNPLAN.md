@@ -246,4 +246,24 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 
 - *In the end, I had needed to instantiate an observer for the livedata to alter the textviews as required in the onChanged method call... Sometimes, I get caught up in the attempts and I just keep trying things without full thought until I get something going*
 
-- *I should be documenting as I go, but I am not. I think that now that I am this stage, I should maybe stop, organize my files, document them to the best of my knowledge, and maybe draw some diagrams to represent the logic flow of my app thus far...* 
+- *I should be documenting as I go, but I am not. I think that now that I am this stage, I should maybe stop, organize my files, document them to the best of my knowledge, and maybe draw some diagrams to represent the logic flow of my app thus far...*
+
+**June 13 / 2021**
+
+- *For potential cleanup in the future - I don't think that I need to use separate layout files for the fragments. I think that I can use just one as they all just display a RecyclerView. - I deleted these excess layout files. They were indeed unneccesary*
+
+- *I am going to go through my files and do a rough commenting out of the code (as boring as that may seem) as not to get to far ahead of myself. And I think that I would like to start on the Settings Activity so my source files are going to start to get congested.*
+
+- *I need to add and inflate the menu in detail Activity*
+
+- *I added the menu and an up arrow to direct back to main activity. I also rid the toolbar menu of the add recipe and clear all recipe options as it doesn't make much sense to have those here. Though it might be nice to have an option to delete the recipe that the user is currently on. -To navigate back to main and then delete the card/recipe*
+
+- *I am just reviewing the code that I have, deleteing useless code, and documenting briefly*
+
+- *Questions to come back to : What is a context? What is a bundle? What is a savedState? What is an application (in the sense of the object)? What is the... etc*
+
+**June 14 / 2021**
+
+- *This morning I will be working on integrating the settings menu (Which I am not quite sure what I Will be putting in there), but it will be nice to have it there anyways for now. I do want a dark theme I suppose...*
+
+- *It looks like a should implement what is neccesary for displaying this app on a tablet... But I will have to change a few things, like changing the layout manager to be a Grid or staggered grid. I will also want to change that some of the menu options are visible in the app bar in tablet mode.*

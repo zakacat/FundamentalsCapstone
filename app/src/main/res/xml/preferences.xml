@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- I want the setting to be false by default... A recipe book seems
+    to be something that benefits from being nice and brightly colored -->
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="dark_mode"
+        android:summary="Reduce eye strain in a dark setting."
+        android:title="Dark Mode?" />
+</PreferenceScreen>

@@ -2,6 +2,7 @@ package com.example.android.fundamentalscapstone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -11,13 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Set;
+
+import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
+import static androidx.preference.PreferenceManager.setDefaultValues;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,6 +92,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //Call this to ensure that the preferences are properly initialized. Tlas param- the boolean
+        //sets to NOT set the default values more than once. True will override previous settings.
+        androidx.preference.PreferenceManager
+                .setDefaultValues(this, R.xml.preferences, false);
+        //Here I am calling from the shared preferences and displaying a taost to show the value
+        //of dark_mode.
+        SharedPreferences sharedPref =
+                androidx.preference.PreferenceManager
+                        .getDefaultSharedPreferences(this);
+        Boolean switchPref = sharedPref.getBoolean
+                (SettingsActivity.KEY_PREF_DARK_MODE, false);
+        //This Toast does not display properly, but I think it is the context as the MainActivity is
+        //hosting the view pager, tab elements, and fragments. However the log statement is
+        //displaying the information that is to be expected.
+//        Toast.makeText(this, switchPref.toString(),
+//                Toast.LENGTH_SHORT).show();
+        Log.d("sharedPref test", switchPref.toString());
+
+        //Here is the easy way to choose between night mode and day mode...
+        //Because the app comes with a themes of night and normal, AppCompatDelegate
+        //must switch between the two themes in the background.
+        if (switchPref == true){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
 
@@ -91,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         // I can programmatically remove the add option like this >>> menu.removeItem(R.id.menu_add); >>> nice
         return true;
     }
+
     //Here is where I can add the intents for the dialogs and activities...
     //A dialog for add, an activity for settings (see the text), a dialog for about, and a dialog (for practice) or acitivity for feedback.
     @Override
@@ -103,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 return true; //no need for break statements as return statements also exit the switch block
             }
             case R.id.menu_settings: {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             }
             case R.id.menu_about: {

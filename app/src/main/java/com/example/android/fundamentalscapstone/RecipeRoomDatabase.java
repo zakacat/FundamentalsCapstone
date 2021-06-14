@@ -8,16 +8,18 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
-@Database(entities = Recipe.class, version = 2, exportSchema = false)
+//The Recipe Database is an abstract class that builds the database from the table.
+//Instance and singleton is used to avoid multiple versions of the database exisitng
+//at one time, which is not good.
+@Database(entities = Recipe.class, version = 2, exportSchema = false)//Version numbers don't need to be changed as the user has creative control of Recipes at this point.
 public abstract class RecipeRoomDatabase extends RoomDatabase {
 
     public abstract RecipeDao recipeDao();
 
-    private static RecipeRoomDatabase INSTANCE;
+    private static RecipeRoomDatabase INSTANCE; //Singleton
 
     public static RecipeRoomDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
+        if (INSTANCE == null) { //check to see if there is a database
             synchronized (RecipeRoomDatabase.class) {
                 if (INSTANCE == null) {
                     //Create the database here
@@ -26,8 +28,8 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                             // if no Migration object.
                             // Migration is not part of this practical.
                             // I am not quite sure how this will affect my app.
-                            .fallbackToDestructiveMigration()
-                            .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration() //this can prevent updating the low-level information as there is no proper migration strategy.
+                            .addCallback(sRoomDatabaseCallback) //calls everytime.
                             .build();
 
                 }
@@ -36,6 +38,8 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    //This private class acts when the database is opened. onOpen (if the INSTANCE is null) this will be called and
+    //directed to the startdata call which is an asynctask.
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
 
         @Override
@@ -48,11 +52,12 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
     private static class PopulateDBAsync extends AsyncTask<Void, Void, Void> {
 
         private final RecipeDao mDao;
-
+        //Constructor to migrate the DAO.
         PopulateDBAsync(RecipeRoomDatabase db) {
             mDao = db.recipeDao();
         }
 
+        //Only if there is no recipe to retrieve from the database
         @Override
         protected Void doInBackground(final Void... params) {
 

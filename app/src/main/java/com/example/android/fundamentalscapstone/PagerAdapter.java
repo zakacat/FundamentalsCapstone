@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 //FragmentStateAdapter is the newer version that I should be using.
+//This PagerAdapter simply returns a new fragment when the
+//corresponding tab is selected.
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
 

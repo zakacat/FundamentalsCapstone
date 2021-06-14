@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+//Refer to AbdTabFragment for details.
 public class MealTabFragment extends Fragment {
 
     private RecipeViewModel mRecipeViewModel;
@@ -31,9 +32,9 @@ public class MealTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mealFragment = inflater.inflate(R.layout.fragment_meal_tab, container, false);
+        mealFragment = inflater.inflate(R.layout.fragment_tab_recyclerview, container, false);
 
-        RecyclerView recyclerView = mealFragment.findViewById(R.id.meal_recyclerview);
+        RecyclerView recyclerView = mealFragment.findViewById(R.id.tab_recyclerview);
         mAdapter = new RecipeListAdapter(mealFragment.getContext());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mealFragment.getContext()));

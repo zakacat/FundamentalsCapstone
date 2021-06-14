@@ -2,27 +2,21 @@ package com.example.android.fundamentalscapstone;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import java.util.List;
-
+//Tab for listing the recipes by title in alphabetical order.
 public class AbcTabFragment extends Fragment {
 
     private RecipeListAdapter mAdapter;
@@ -40,14 +34,18 @@ public class AbcTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //Remember to create the view first, and then we can assign view widgets and adjust them as such...
+        //All the tab fragments now call the same layout and thusly the same recyclerview widget.
+        abcFragment = inflater.inflate(R.layout.fragment_tab_recyclerview, container, false);
 
-        abcFragment = inflater.inflate(R.layout.fragment_abc_tab, container, false);
-
-        RecyclerView recyclerView = abcFragment.findViewById(R.id.abc_recyclerview);
+        RecyclerView recyclerView = abcFragment.findViewById(R.id.tab_recyclerview);
+        //Setting the adapter
         mAdapter = new RecipeListAdapter(abcFragment.getContext());
         recyclerView.setAdapter(mAdapter);
+        //Setting the adapter to display the items in the recycler view in a linear view.
         recyclerView.setLayoutManager(new LinearLayoutManager(abcFragment.getContext()));
 
+        //This call needs to be called when instantiating the ViewModel in the class. I think
+        //this again is making sure to reference only the one copy of the ViewModel that exists.
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         mRecipeViewModel.getAllRecipesABC().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
@@ -60,7 +58,9 @@ public class AbcTabFragment extends Fragment {
 
         return abcFragment;
     }
-
+    //Although the call to CREATE the context menu is located in the ListAdapter, handling it is
+    //done here in the fragment. There needs to be a check for which tab is in view or more than
+    //one card will delete.
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = -1;
