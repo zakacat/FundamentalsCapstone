@@ -28,4 +28,10 @@
         android:title="Clear Recipe Book"
         android:orderInCategory="40"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_delete_this"
+        android:title="Delete This Recipe"
+        android:orderInCategory="40"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_delete_forever_24"/>
 </menu>

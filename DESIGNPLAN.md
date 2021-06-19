@@ -267,3 +267,21 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 - *This morning I will be working on integrating the settings menu (Which I am not quite sure what I Will be putting in there), but it will be nice to have it there anyways for now. I do want a dark theme I suppose...*
 
 - *It looks like a should implement what is neccesary for displaying this app on a tablet... But I will have to change a few things, like changing the layout manager to be a Grid or staggered grid. I will also want to change that some of the menu options are visible in the app bar in tablet mode.*
+
+- *I got the settings activity to work with the preferences.xml calle din fragment, but I did not read ahead... I did not implement the settings activity type provided by android studio, but I am not sure if I want to go thru the hassle now... I like how this setting is arranged. I don't imagine that I will have much to add to the setting activity anyways...*
+
+- *Now what is next??? I can add the images later. I would like to fill out the feedback I think that will send an sms or call my number using the info that I got from the extra codelab.*
+
+- *Acually, I might be able to combine the action for phone and sms and use the settings activity as demonstrated in the codelab... I will just modify the usage a bit and display the two options - phone and then sms. This may actualyy turn out quite well.*
+
+- *Nevermind, I will not.*
+
+- *I think that I may only have all the normal overflow options available in the main activity becuase the up arrows all lead back to it. Instead I will use the tollbar to add an option to delete the recipe in the detail activity*
+
+- *Because the intent gets called from the adapter and not the main activity, I cannot get a proper call on result from the activity.*
+
+**June 19 / 2021**
+
+- *I am going to put the delete in detail activity feature on the back burner. This morning, I am going to work on the Feedback Activity which will have the ability to send the SMS or Call my phone number (and only my phone number). I think that I will add the ability to send many iterations, as I think that is funny.*
+
+- *I added the ability to call me, and I have completed the layout as I see fit. I am just messing around with the permissions a bit more. I want the permission dialog to show every time the user presses the call button if the permission is disabled, but I am not sure if that is possible. It seems that if the user denies the permission then they will have to change the permission themselves in settings at a later point...*

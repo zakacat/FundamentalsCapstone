@@ -1,46 +1,58 @@
 package com.example.android.fundamentalscapstone;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Set;
+import static com.example.android.fundamentalscapstone.DetailActivity.EXTRA_REPLY;
 
-import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
-import static androidx.preference.PreferenceManager.setDefaultValues;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecipeViewModel mRecipeViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+//      This is me trying to figure out how to get the delete function to work...
+
+//        if (getIntent() != null) {
+//            Intent intent = getIntent();
+//            String tempTitle = intent.getStringExtra(EXTRA_REPLY);
+//            if (tempTitle != null) {
+//                Log.d("intent Return test", tempTitle);
+//                mRecipeViewModel.getRecipe(tempTitle).observe(this, new Observer<Recipe>() {
+//                    @Override
+//                    public void onChanged(Recipe recipe) {
+//                        mRecipeViewModel.deleteRecipe(recipe);
+//                    }
+//
+//                });
+//            }
+//        }
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -114,10 +126,9 @@ public class MainActivity extends AppCompatActivity {
         //Here is the easy way to choose between night mode and day mode...
         //Because the app comes with a themes of night and normal, AppCompatDelegate
         //must switch between the two themes in the background.
-        if (switchPref == true){
+        if (switchPref == true) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
@@ -128,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         // I can programmatically remove the add option like this >>> menu.removeItem(R.id.menu_add); >>> nice
+        menu.removeItem(R.id.menu_delete_this);
         return true;
     }
 
@@ -139,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_add: {
                 //I will come back here and add the intent or whatever that is needed to start the dialog.
                 DialogFragment addRecipeDialog = new AddRecipeFragment();
-                addRecipeDialog.show(getSupportFragmentManager(), "Add");
-                return true; //no need for break statements as return statements also exit the switch block
+//                addRecipeDialog.show(getSupportFragmentManager(), "Add");
+                return true; //no need for break statements as rteturn statements also exit the switch block
             }
             case R.id.menu_settings: {
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -148,13 +160,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.menu_about: {
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             }
             case R.id.menu_feedback: {
+                Intent intent = new Intent(this, FeedbackActivity.class);
+                startActivity(intent);
                 return true;
             }
             case R.id.menu_clear_all: {
                 mRecipeViewModel.deleteAll();
+                return true;
+            }
+            case R.id.menu_delete_this: {
+                //Do nothing... it shouldn't appear here.
                 return true;
             }
             default:

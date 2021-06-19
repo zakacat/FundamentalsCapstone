@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FeedbackActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:id="@+id/feedback_call_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call zakacat"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <ImageButton
+        android:id="@+id/feedback_call_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/feedback_call_title"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/feedback_call_title"
+        android:src="@drawable/ic_baseline_call_24"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="callZakacat"/>
+
+    <TextView
+        android:id="@+id/feedback_text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text zakacat"
+        android:layout_below="@+id/feedback_call_title"
+        android:layout_margin="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+
+    <ImageButton
+        android:id="@+id/feedback_text_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_textsms_24"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/feedback_text_title"
+        android:layout_alignBottom="@id/feedback_text_title"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="textZakacat"/>
+
+    <EditText
+        android:id="@+id/feedback_input_text_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="Great Job!"
+        android:layout_below="@id/feedback_text_title"
+        android:layout_marginLeft="16dp"/>
+
+    <Spinner
+        android:id="@+id/feedback_text_iterations_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedback_input_text_edit"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:entries="@array/iterations_array" />
+
+    <TextView
+        android:id="@+id/feedback_postscript_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*Yes, this is my actual number, and yes, I know that this is a terrible idea."
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+</RelativeLayout>

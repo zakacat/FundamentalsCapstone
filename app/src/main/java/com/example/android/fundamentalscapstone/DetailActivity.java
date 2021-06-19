@@ -18,7 +18,9 @@ import android.widget.TextView;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_RECIPE_PRIMARY_KEY = "recipe_id";
+    public static final String EXTRA_REPLY = "com.example.android.fundamentalscapstone.extra.REPLY";
     private RecipeViewModel mRecipeViewModel;
+    private Recipe mOpenRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class DetailActivity extends AppCompatActivity {
                 briefDescriptionTextView.setText(recipe.getBriefDescription());
                 ingredientsTextView.setText(recipe.getIngredientsWithMeasurements());
                 instructionsTextView.setText(recipe.getInstructions());
+//                mOpenRecipe = recipe;
             }
         });
 
@@ -127,6 +130,8 @@ public class DetailActivity extends AppCompatActivity {
         menu.removeItem(R.id.menu_add);
         menu.removeItem(R.id.menu_clear_all);
         menu.removeItem(R.id.menu_settings);
+        menu.removeItem(R.id.menu_about);
+        menu.removeItem(R.id.menu_feedback);
         return true;
     }
     //Here is where I can add the intents for the dialogs and activities...
@@ -134,25 +139,38 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add: {
+            case R.id.menu_add: { //should not be displayed.
                 //I will come back here and add the intent or whatever that is needed to start the dialog.
                 DialogFragment addRecipeDialog = new AddRecipeFragment();
                 addRecipeDialog.show(getSupportFragmentManager(), "Add");
                 return true; //no need for break statements as return statements also exit the switch block
             }
-            case R.id.menu_settings: {
+            case R.id.menu_settings: {//should not be displayed.
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             }
-            case R.id.menu_about: {
+            case R.id.menu_about: {//should not be displayed.
                 return true;
             }
-            case R.id.menu_feedback: {
+            case R.id.menu_feedback: {//should not be displayed.
                 return true;
             }
-            case R.id.menu_clear_all: {
+            case R.id.menu_clear_all: {//should not be displayed.
                 mRecipeViewModel.deleteAll();
+                return true;
+            }
+            case R.id.menu_delete_this:{
+                //I will at code to this later to delete the current recipe and send the user
+                //back to the main screen.
+//                Intent replyIntent = new Intent(this, MainActivity.class);
+//                replyIntent.putExtra(EXTRA_REPLY, mOpenRecipe.getTitle());
+//                startActivity(replyIntent);
+//                onDestroy();
+
+//                mRecipeViewModel.deleteRecipe(mOpenRecipe);
+                //I can't do it this way... I need to pass this information back to MainActivity and
+                //then I should be able to delete the recipe from there as there are listeners.
                 return true;
             }
             default:
