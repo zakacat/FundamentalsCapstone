@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_add: {
                 //I will come back here and add the intent or whatever that is needed to start the dialog.
                 DialogFragment addRecipeDialog = new AddRecipeFragment();
-//                addRecipeDialog.show(getSupportFragmentManager(), "Add");
+                addRecipeDialog.show(getSupportFragmentManager(), "Add");
                 return true; //no need for break statements as rteturn statements also exit the switch block
             }
             case R.id.menu_settings: {
