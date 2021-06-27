@@ -160,7 +160,9 @@ public class AddRecipeFragment extends DialogFragment {
         //recipe is created twice. Maybe I will come back to this. *I figured this out somewhere else.
         //I was able to add a conflict strategy to the DAO.
         RecipeViewModel newRecipe = ViewModelProviders.of(this).get(RecipeViewModel.class);
-        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType));
+        //the image resource attribute is set to zero in the constructor to test the glide function.
+        //There is going to be a fair amount more work involved in making it possible to add their own pictures.
+        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType, 0));
 
         onStop();
     }

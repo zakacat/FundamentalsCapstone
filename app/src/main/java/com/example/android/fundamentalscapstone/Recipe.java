@@ -38,6 +38,9 @@ public class Recipe {
     @ColumnInfo(name = "Type of Meal")
     private int mTypeOfMeal;
 
+    @ColumnInfo(name = "Image Path")
+    private int mImageResource;
+
 
     // I would like to also find a way to store an image... I think I can save the file locally and access it with the saved file path.
     //private String mImageURI; I can refer to 5.2 Cards and colors.
@@ -45,7 +48,7 @@ public class Recipe {
 
     //The constructor needs a input for all the parameters/attributes. Null input should be avoided.
     //Null cases should be replaced with an empty string "".
-    public Recipe(@NonNull String title, String briefDescription, String ingredientsWithMeasurements, String ingredientsForShopping, String instructions, int regionOfOrigin, int typeOfMeal) {
+    public Recipe(@NonNull String title, String briefDescription, String ingredientsWithMeasurements, String ingredientsForShopping, String instructions, int regionOfOrigin, int typeOfMeal, int imageResource) {
         this.mTitle = title;
         this.mBriefDescription = briefDescription;
         this.mIngredientsWithMeasurements = ingredientsWithMeasurements;
@@ -53,6 +56,7 @@ public class Recipe {
         this.mInstructions = instructions;
         this.mRegionOfOrigin = regionOfOrigin;
         this.mTypeOfMeal = typeOfMeal;
+        this.mImageResource = imageResource;
     }
     //Getters for all the attributes. I also think I will be adding two new attributes. One a boolean
     //for whether the recipe is on the shopping list or not (in which case the shopping ingredients can be
@@ -84,4 +88,6 @@ public class Recipe {
     public int getTypeOfMeal() {
         return mTypeOfMeal;
     }
+
+    public int getImageResource() {return mImageResource;}
 }

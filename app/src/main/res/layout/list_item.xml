@@ -12,10 +12,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+                android:id="@+id/card_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/image_not_found" />
+
         <LinearLayout
             android:id="@+id/card_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/card_imageView"
             android:orientation="horizontal">
 
             <TextView

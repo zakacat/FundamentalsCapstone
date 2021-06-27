@@ -285,3 +285,139 @@ ItemTouchHelper| I will use the ItemTouchHelper to be able to move the recipe ca
 - *I am going to put the delete in detail activity feature on the back burner. This morning, I am going to work on the Feedback Activity which will have the ability to send the SMS or Call my phone number (and only my phone number). I think that I will add the ability to send many iterations, as I think that is funny.*
 
 - *I added the ability to call me, and I have completed the layout as I see fit. I am just messing around with the permissions a bit more. I want the permission dialog to show every time the user presses the call button if the permission is disabled, but I am not sure if that is possible. It seems that if the user denies the permission then they will have to change the permission themselves in settings at a later point...*
+
+**June 21 / 2021**
+
+- *This morning, I would like to add the second feature of my feedback actvity, and that is to send the SMS texts*
+
+- *I have implemented that and the I have also added the feature to set how many times to send the text*
+
+- *I would like to maybe add the MMS function, but I am not sure how.*
+
+- *I think that I would like to add the share by text feature in the detail activity.*
+
+**June 26 / 2021**
+
+- *Now what should I start on this weekend? I think I am starting to get some fatigue for this project... and I would like to get this taken care of and out of the way so I can go outside and enjoy the sun!!!*
+
+- *I think I will re-upload my design table here and update which objectives I have aleady completed, or atleast partially completed*
+
+**Concept**|**Design Solution**
+-----------|-------------------
+Lesson 1
+Log Statements| check
+View Elements| check
+Layout Editor| This will be tough to prove in code, so I will make a short (less than 5 min) YouTube video to demonstrate my knowhow
+Toast Messages| partially implemented
+TextView & ScrollView| check. Used in the detail activity.
+HTML Formatting| I will format the TextView in a pleasant enough manner
+Web Links| I will embed links within the TextView (maybe to my YouTube channel for recipes that I have already demonstrated)
+Lesson 2
+Multiple Activities| check
+Explicit Intents| check
+Implicit Intents| Maybe I will open an implicit intent for the user to be able to e-mail me with any bugs that they might find.
+Android:Visibility| I can add possibly a section within the recipe details activity that could maybe also show the measurements in metric. I would be able to change the visibility in settings.
+Lifecycle Methods| I will override all lifecycle methods (onCreate(), onStart(), onPause(), onRestart(), onResume(), onStop(), and onDestroy()) and include extra code and add log messages everytime method is called.
+Landscape Mode| Add a integrated landscape mode with save-state to retain the information on the screen when the user rotates it.
+Automatic Restoration| Document properly which portions of the activity are saved automatically onRestart()
+onSavedInstanceState()| I will utilize the key/value pairs of onSavedInstanceState() to create a save state for the landscape mode.
+Open Location, Open Website, Open Share| Using implicit intent to open up the user's current location, or maybe my website, and maybe a share option (which can send the APK?)
+Receive an Implicit Intent| The app will be able to receive an intent of the View type in the default category... I am not yet sure how I can implement this.
+Lesson 3
+Debugging| I will make a YouTube video demonstrating my debugging ability. I should address this actively... I will do a debuggin session on a real bug
+Unit Tests (JUnit)| I will write a full and impressive Unit Test for operations that I will won't to demonstrate functionality.
+Android Support Library, SDK directives, and Dependencies| I will make another short YouTube video demonstrating this ability.
+Lesson 4
+Drawables| partially implemented
+ImageView and android:onClick| The images of the recipe will be clickable in the detail activity and if the user would like, they can upload their own picture (using and implicit intent to take a picture).
+android:inputType| check
+Radio Buttons| check
+Spinner and Array Adapter| check
+onItemSelected() & getItemAtPosition()| check
+Basic Activity| decided not to utilize
+AppBarLayout| check
+ToolBar| check
+setSupportActionBar()| check
+onOptionsItemSelected()| check
+app:showAsAction| check
+AlertDialog and AlertDialogBuilder| check
+DialogFragment| check
+FragmentManager and getSupportFragmentManager| check
+Parent Activities| check
+Tabs| check
+ViewPager, FragmentPagerAdapter, FragmentStatePagerAdapter| check
+RecyclerView| check
+LinearLayoutManager, GridLayoutManager, StaggeredGridLayoutManager| check
+View.onClickListener| check
+Lesson 5
+ShapeDrawable| I will create my own drawable for the add recipe button as it should be quite simple. I will stack a circle and a cross I think somehow. It will not be unique, but it will demonstrate my understanding of the concept.
+Styles| I will use styles for buttons and textviews (Maybe even just the font) for standardization and ease across the app. A style applied to an activity or app (like the default one) will be declared in AndroidManifest.xml
+Inheriting Styles| I will ensure that at least one style inherits from a parent style that is available in the library.
+Themes| check
+CardView| check
+Glide| I will use this to import the pictures into the app for display it is a lot less intensive for processing and space wise.
+ItemTouchHelper| check
+Material Design| I will refer to material design for the theme and for some ideas to borrow for the layout most likely. Like best practice for spacing and location of certain actions.
+Configurations| I will add a separate configuration to load the strings.xml in Spanish (but I will just copy and paste from Google to hasten this process).
+Lesson 6
+Espresso| I will set up UI testing using the Espresso API. There needs to appropraite instrumentation, implementaion, and annotations to run successfully. I will ensure that a spinner gets tested. There should be an option using a Spinner in the Settings Activity.
+Lesson 7
+AsyncTask| check
+onPreExectute(), doInBackground(), onPostExecute(), and onProgressUpdate()| partially implemented
+Broadcast Receiver| I will receive certain broadcasts like when the user is connected to wifi, at which point the list of recipe books from the Google API can be updated.
+Custom Broadcast| The app will be able to send (and possible receive the same) custom broadcast. I can use a local broadcast if this is the case.
+LocalBroadcastManager| This will be needed to manager the local custom broadcast.
+Lesson 8
+Notifications| I will implement notifications on a timer that reminds the user that they should start looking at the recipes at 5pm (near supper time). This will be able to be adjusted in the settings menu.
+NotificationCompat.Builder| This will be used to builder the visual and UI aspects of the notification.
+Cancel Notification| I will add the a notification ID to be able to update and cancel the notification.
+setSmallIcon(), setContentTitle(), setContentText()| These will be used to further customize the notification.
+AlarmManager| This will be used in tandem with the notification to alert the user that they should start considering what they will be having for supper.
+setAndAllowWhileIdle() or setExactAndAllowWhileIdle()| These can be used to complete tasks while idle, possibly update the Recipe book list from Google's API and designated intervals.
+InexactTime| I will use this with the scheduled AsyncTask as not to overload the thread with multiple requests.
+Pending Intents| check (used for SMS)
+JobScheduler| I will use the JobScheduler to check for new versions of the app??? This may just be an empty task that does not actually search for new versions but simply returns a message saying "This is the newest version of the app".
+JobInfo| I will use this to define the conditions for acting out the job.
+JobService| This will need to be defined. This is the code to be executed once the conditions have been met.
+Lesson 9
+Shared Preferences| partially implemented
+SharedPreferences.Editor| I will use this alongside put, get, clear, and apply methods to manage the user information.
+Settings Activity| check
+PreferenceFragment| decided not to implement
+PreferencFragmentCompat = getSupportFragmentManager()| decided not to implement
+setPreferencesFromResource()| decided not to implement
+PreferenceManager.setDefaultValues()| check
+Settings Control| partially implemented
+Settings & onCreate()| check
+Lesson 10
+Room, LiveData, and ViewModel| check
+Repository| check
+ItemTouchHelper| check (and referenced twice)
+
+- *Well, lots of the difficult things have been addressed already. I still want to continue tackling then tough stuff and then move onto the easier things and clean up*
+
+ - *I think that the Glide feature is what I will work on this weekend*
+
+ **June 27 / 2021**
+
+ - *I am currently finding some recipes online that I am going to borrow my starter data from.*
+
+ - *I will need to approach this a bit differently. The codelab explains the process with a set amount of starter data and setting the file path for the images in a typed array which I don't think I can do... I also want to be able to save an image locally and use that image as the banner image if the user adds a new recipe*
+
+ - *I will definitely need to add the image resource attribute to the recipe object/entity. I will need to pass that accesor up the chain. Once that resource is savee, I should be able to access it like anything else. I should also have a default 'no image loaded' image to display if the user decides to not add anything*
+
+ - *I will start by creating some starter data, I reckon, to test this out. I also need to come up with a fail safe as to handle not having an image available, something along the lines of if imageResource equals null then load the 'no image loaded' image in place of.*
+
+ - *So, my steps are to first... I will add the image view to the card layout, then I will add the imageResource attribute to the object and I will send it up classes as well, then I will create the starter data and hard set the image paths, and I will make sure that the initial images that I add will have the correct names and are in the correct location*
+
+ - *There is going to be a fair amount more work in allowing the user to add their own pictures, but it will be very cool. I understand the starter data and I will try and get that going right now*
+
+ - *The image resource is defined as an int... so I guess I have set the default value to zero and make my condtionals be that if zero is set, then display the no_image_found image in leu of.*
+
+- *All my defualt string values are making this a huge mess, but I will export the strings eventually*
+
+- *I will need to create proper headers in the detail activity... I have an idea for that... I can concatenatnate the header on creation... no wait.... I want it as a sepearte text view in the layout file*
+
+- *I am realizing that an option to connect to Google supported API and load the recipes from there might have been a great idea... That is something that I can try a bit later on... This is mostly and offline version of a recipe book*
+
+- *Well that is about all that I want to get done for this session. I need to workout and eat lunch and maybe work on this later.*

@@ -2,8 +2,10 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e1bee7">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,17 +23,25 @@
         android:layout_below="@+id/toolbar">
 
 
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             tools:context=".DetailActivity">
 
 
+            <ImageView
+                android:id="@+id/imageView_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/image_not_found" />
+
             <TextView
                 android:id="@+id/title_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView_detail"
                 android:text="Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textStyle="bold" />

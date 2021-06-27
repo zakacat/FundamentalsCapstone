@@ -13,7 +13,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -41,6 +44,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d("DetailActivity onCreate", tempTitle);
 
         //Assigning View widgets
+        ImageView imageView = findViewById(R.id.imageView_detail);
         TextView titleTextView = findViewById(R.id.title_detail);
         TextView regionTextView = findViewById(R.id.region_detail);
         TextView mealTextView = findViewById(R.id.meal_detail);
@@ -54,7 +58,11 @@ public class DetailActivity extends AppCompatActivity {
         mRecipeViewModel.getRecipe(tempTitle).observe(this, new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
-
+                if (recipe.getImageResource() != 0) {
+                    Glide.with(getApplicationContext()).load(recipe.getImageResource()).into(imageView);
+                }
+                else
+                    Glide.with(getApplicationContext()).load(R.drawable.image_not_found).into(imageView);
                 //And Here is where I can update the Widgets with the correct attributes.
                 titleTextView.setText(recipe.getTitle());
                 //Region and Meal attributes are stored as ints so they are converted to Strings to

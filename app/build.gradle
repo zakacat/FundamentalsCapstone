@@ -53,4 +53,6 @@ dependencies {
     //For Preferences
     implementation 'com.android.support:preference-v7:26.1.0'
 
+    //For Glide which is used to effeciently load images
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }

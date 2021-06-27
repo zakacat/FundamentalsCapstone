@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -115,12 +118,22 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                     meal = "no data";
             }
             holder.recipeMealView.setText(meal);
+
+            //Here I will load the images as I see fit. I will start with the starter data and I also
+            //included a clause as to avoid a null circumstance.
+            if (current.getImageResource() != 0) {
+                Glide.with(holder.itemView.getContext()).load(current.getImageResource()).into(holder.recipeImageView);
+            }
+            else {
+                Glide.with(holder.itemView.getContext()).load(R.drawable.image_not_found).into(holder.recipeImageView);
+            }
         } else {
             //In case the data is not ready yet
             holder.recipeTitleView.setText("no data");
             holder.recipeDescriptionView.setText("no data");
             holder.recipeRegionView.setText("no data");
             holder.recipeMealView.setText("no data");
+            Glide.with(holder.itemView.getContext()).load(R.drawable.image_not_found).into(holder.recipeImageView);
         }
 
         //This is the listener that will handle the longclick. It simply updates the position from
@@ -182,6 +195,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     //assign a menuinflater to go with the holder.
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         private final TextView recipeTitleView, recipeDescriptionView, recipeRegionView, recipeMealView;
+        private final ImageView recipeImageView;
 
         private RecipeViewHolder(View itemView) {
             super(itemView);
@@ -189,6 +203,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             recipeDescriptionView = itemView.findViewById(R.id.card_brief_description);
             recipeRegionView = itemView.findViewById(R.id.card_region);
             recipeMealView = itemView.findViewById(R.id.card_meal);
+            recipeImageView = itemView.findViewById(R.id.card_imageView);
             itemView.setOnCreateContextMenuListener(this);
         }
 
