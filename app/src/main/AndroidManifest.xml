@@ -3,6 +3,12 @@
     package="com.example.android.fundamentalscapstone">
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="18" />
+
+
 
     <application
         android:allowBackup="true"
@@ -29,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

@@ -396,7 +396,9 @@ ItemTouchHelper| check (and referenced twice)
 
 - *Well, lots of the difficult things have been addressed already. I still want to continue tackling then tough stuff and then move onto the easier things and clean up*
 
+
  - *I think that the Glide feature is what I will work on this weekend*
+
 
  **June 27 / 2021**
 
@@ -421,3 +423,13 @@ ItemTouchHelper| check (and referenced twice)
 - *I am realizing that an option to connect to Google supported API and load the recipes from there might have been a great idea... That is something that I can try a bit later on... This is mostly and offline version of a recipe book*
 
 - *Well that is about all that I want to get done for this session. I need to workout and eat lunch and maybe work on this later.*
+
+**June 28 / 2021**
+
+- *How am I going to be able to add pictures to the recipe??? I will need to adda field for the user to add a picture... I think there would be two possiblities... from gallery or take a picture. I suppose whichever is easier to implement would be great, but I only need 1 of the two options. Then we the user chooses to add the photo, the image needs to be saved to drawables folder. The name of the file is what is used to access the picture, so the name of the file will also need to be saved... I can create the name for the image automatically by just combining the title of the recipe maybe... I will also want to easily delete the photo from the local storage when the user decides to delete the recipe (Without deleting the images of the start data recipes, hmmmm). Currently, the recipe saves the image as a resource ID reference int and uses that to point and access the image.*
+
+- *I believe that I can use the common camera intent as discussed on https://developer.android.com/guide/components/intents-common#CameraStill to open a camera app and return the picture that is taken by the user and then save it in the drawables folder... and retrieve that resource ID somehow upon creation???*
+
+- *I have gotten the image capture to work and I am display that bitmap thumbnail on the image button which looks great! Next step is to save the image in drawables and then save the resource ID of this image to the new Recipe! Then I will want to be able to delete the image when the Recipe is deleted...*
+
+- *This part is proving a bit more difficult... I think that I can save the file externally or internally and make it have private access, but it will be outside of my resource files, so I will not be able to generate a resource ID... which is how I access the photos in the first place... Maybe I can store the file path and access the photos that way... hmmm*

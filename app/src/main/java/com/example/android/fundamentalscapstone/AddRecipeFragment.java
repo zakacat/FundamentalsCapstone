@@ -1,12 +1,21 @@
 package com.example.android.fundamentalscapstone;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +23,29 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 //This is the fragment which displays the recipe creator dialog.
 public class AddRecipeFragment extends DialogFragment {
 
     private View mAddRecipeDialog;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageButton addImageButton;
+    //private String currentPhotoPath;
+    private int mRecipeImageResourceID;
+
 
     public AddRecipeFragment() {
         // Required empty public constructor
@@ -42,6 +65,21 @@ public class AddRecipeFragment extends DialogFragment {
         mAddRecipeDialog = inflater.inflate(R.layout.fragment_add_recipe, container, false);
 
         //Adding buttons programatically and handling them with private methods.
+
+        addImageButton = mAddRecipeDialog.findViewById(R.id.add_recipe_imagebutton);
+        addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                }
+
+
+            }
+        });
         Button addButton = mAddRecipeDialog.findViewById(R.id.add_recipe_add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +108,7 @@ public class AddRecipeFragment extends DialogFragment {
         String ingredientsWithMeasurements;
         String ingredientsForShopping;
         String instructions;
+        int resourceID;
 
 
         /** This block below is for handling the first EditText for the Title attribute.
@@ -83,6 +122,7 @@ public class AddRecipeFragment extends DialogFragment {
             //title as that becomes the @PrimaryKey and it cannot be null.
             title = "";
         }
+
         /** This block below is for handling the radiobutton group
          */
         // I will incorporate a switch block to assign the int values to be stored.
@@ -154,7 +194,15 @@ public class AddRecipeFragment extends DialogFragment {
             //assign ""
             instructions = "";
         }
-         //Using the ViewModel as it is the highest level of access.
+
+        if (mRecipeImageResourceID != 0) {
+            resourceID = mRecipeImageResourceID;
+        } else {
+            resourceID = 0;
+        }
+
+
+        //Using the ViewModel as it is the highest level of access.
         //Here I am trying to add a check to make sure that the title doesn't match another recipe.
         //Because it is also the primary key, the app will crash if I don't do this check and the same
         //recipe is created twice. Maybe I will come back to this. *I figured this out somewhere else.
@@ -162,7 +210,7 @@ public class AddRecipeFragment extends DialogFragment {
         RecipeViewModel newRecipe = ViewModelProviders.of(this).get(RecipeViewModel.class);
         //the image resource attribute is set to zero in the constructor to test the glide function.
         //There is going to be a fair amount more work involved in making it possible to add their own pictures.
-        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType, 0));
+        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType, resourceID));
 
         onStop();
     }
@@ -170,5 +218,15 @@ public class AddRecipeFragment extends DialogFragment {
     private void onCancelButtonClicked() {
         onStop();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            addImageButton.setImageBitmap(imageBitmap);
+        }
+    }
+
 
 }
