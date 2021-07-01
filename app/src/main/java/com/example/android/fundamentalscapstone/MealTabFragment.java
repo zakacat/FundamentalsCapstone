@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.List;
 
 //Refer to AbdTabFragment for details.
@@ -66,7 +67,13 @@ public class MealTabFragment extends Fragment {
             if (item.getItemId() == R.id.menu_delete) {
                 //Delete the recycler view at this position.
                 Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
+                String imageToDelete = myRecipe.getImageResource();
                 mRecipeViewModel.deleteRecipe(myRecipe);
+                if (imageToDelete != null) {
+                    File recipeImage = new File(imageToDelete);
+                    recipeImage.delete();
+                    Log.d(LOG_TAG, "Deleted an image from MealTabFragment.");
+                }
                 Log.d(LOG_TAG, "Deleted a recipe from MealTabFragment.");
             }
         }

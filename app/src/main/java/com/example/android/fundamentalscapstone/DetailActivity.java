@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
         mRecipeViewModel.getRecipe(tempTitle).observe(this, new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
-                if (recipe.getImageResource() != 0) {
+                if (recipe.getImageResource() != null) {
                     Glide.with(getApplicationContext()).load(recipe.getImageResource()).into(imageView);
                 }
                 else

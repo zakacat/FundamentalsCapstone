@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,8 +44,7 @@ public class AddRecipeFragment extends DialogFragment {
     private View mAddRecipeDialog;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageButton addImageButton;
-    //private String currentPhotoPath;
-    private int mRecipeImageResourceID;
+    private String currentPhotoPath;
 
 
     public AddRecipeFragment() {
@@ -71,10 +71,23 @@ public class AddRecipeFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                try {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                } catch (ActivityNotFoundException e) {
-                    // display error state to the user
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(getContext(),
+                                "com.example.android.fundamentalscapstone",
+                                photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
                 }
 
 
@@ -108,7 +121,7 @@ public class AddRecipeFragment extends DialogFragment {
         String ingredientsWithMeasurements;
         String ingredientsForShopping;
         String instructions;
-        int resourceID;
+        String imageResource;
 
 
         /** This block below is for handling the first EditText for the Title attribute.
@@ -195,10 +208,10 @@ public class AddRecipeFragment extends DialogFragment {
             instructions = "";
         }
 
-        if (mRecipeImageResourceID != 0) {
-            resourceID = mRecipeImageResourceID;
+        if (currentPhotoPath != null) {
+            imageResource = currentPhotoPath;
         } else {
-            resourceID = 0;
+            imageResource = null;
         }
 
 
@@ -210,7 +223,7 @@ public class AddRecipeFragment extends DialogFragment {
         RecipeViewModel newRecipe = ViewModelProviders.of(this).get(RecipeViewModel.class);
         //the image resource attribute is set to zero in the constructor to test the glide function.
         //There is going to be a fair amount more work involved in making it possible to add their own pictures.
-        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType, resourceID));
+        newRecipe.insert(new Recipe(title, briefDescription, ingredientsWithMeasurements, ingredientsForShopping, instructions, region, mealType, imageResource));
 
         onStop();
     }
@@ -222,11 +235,26 @@ public class AddRecipeFragment extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            addImageButton.setImageBitmap(imageBitmap);
+            Glide.with(getContext()).load(currentPhotoPath).into(addImageButton);
         }
     }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CANADA).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.android.fundamentalscapstone;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 //The Recipe Database is an abstract class that builds the database from the table.
 //Instance and singleton is used to avoid multiple versions of the database exisitng
 //at one time, which is not good.
-@Database(entities = Recipe.class, version = 4, exportSchema = false)//Version numbers don't need to be changed as the user has creative control of Recipes at this point.
+@Database(entities = Recipe.class, version = 5, exportSchema = false)//Version numbers don't need to be changed as the user has creative control of Recipes at this point.
 public abstract class RecipeRoomDatabase extends RoomDatabase {
 
     public abstract RecipeDao recipeDao();
@@ -97,7 +98,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "  2.   Put the flour and black pepper into a large zip lock bag.\n" +
                         "  3.   Dredge chicken wings into the egg mixture then toss into the Ziplock bag of flour.\n" +
                         "  4.   Deep fry in a large pot of oil or deep fryer at 350° for 5-8 minutes or until light brown and crispy. Remove wings to a paper towel lined plate or tray.\n" +
-                        "  5.   Toss the wings in remaining buffalo wing sauce and enjoy. Dip onto vegan ranch sauce and follow with celery and carrot sticks.\n", 0, 2, R.drawable.vegan_buffalo_wings));
+                        "  5.   Toss the wings in remaining buffalo wing sauce and enjoy. Dip onto vegan ranch sauce and follow with celery and carrot sticks.\n", 0, 2, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.vegan_buffalo_wings).toString()));
                 mDao.insert(new Recipe("Flour Tortillas", "These homemade flour tortillas are tender, soft and flavorful. Because they keep well, they can be made in advance and warmed in the microwave or on the stovetop, just before serving.", " 3 cups all-purpose flour\n" +
                         "1 teaspoon salt\n" +
                         "1 teaspoon baking powder\n" +
@@ -118,7 +119,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                                 "\n" +
                                 "  8.   Serve warm or allow to cool for later use. When ready to use, place a slightly damp paper towel in the bottom of a microwave-safe container (with a cover) that will hold the stacked tortillas. Microwave uncovered for 15-30 seconds (start with 15) or until warm, then keep covered to hold heat while serving.\n" +
                                 "\n" +
-                                "  9.   Store in an airtight container or zippered bag at room temperature for 24 hours or refrigerate for up to 1 week. To freeze, separate tortillas with parchment paper or waxed paper and place in a zippered bag before placing in the freezer.\n", 1, 3, R.drawable.flour_tortillas));
+                                "  9.   Store in an airtight container or zippered bag at room temperature for 24 hours or refrigerate for up to 1 week. To freeze, separate tortillas with parchment paper or waxed paper and place in a zippered bag before placing in the freezer.\n", 1, 3, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.flour_tortillas).toString()));
                 mDao.insert(new Recipe("Pierogi", "Pierogi, dumplings stuffed with a filling, make for a wonderful change-of-pace side dish.", "5 cups all-purpose flour\n" +
                         "1 teaspoon salt\n" +
                         "1 cup water\n" +
@@ -132,7 +133,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "  3.   Drain potatoes. Over very low heat, stir potatoes until steam has evaporated, 1-2 minutes. Press through a potato ricer or strainer into a large bowl. Stir in cream cheese, salt, pepper and onion mixture; set aside.\n" +
                         "  4.   Divide dough into 4 parts. On a lightly floured surface, roll 1 portion of dough to 1/8-in. thickness; cut with a floured 3-in. biscuit cutter. Place 2 teaspoons of filling in center of each circle. Moisten edges with water; fold in half and press edges to seal. Repeat with remaining dough and filling.\n" +
                         "  5.   Bring a Dutch oven of water to a boil over high heat; add pierogi in batches. Reduce heat to a gentle simmer; cook until pierogi float to the top and are tender, 1-2 minutes. Remove with a slotted spoon. In a large skillet, saute 4 pierogi and onion in butter until pierogi are lightly browned and heated through; sprinkle with parsley. Repeat with remaining pierogi.\n" +
-                        "  6.   Freeze option: Place cooled pierogi on waxed paper-lined 15x10x1-in. baking pans; freeze until firm. Transfer to an airtight freezer container; freeze up to 3 months. To use, for each serving, in a large skillet, saute 4 pierogi and 1/4 cup chopped onion in 1 tablespoon butter until pierogi are lightly browned and heated through; sprinkle with minced fresh parsley.", 4, 2, R.drawable.pierogi));
+                        "  6.   Freeze option: Place cooled pierogi on waxed paper-lined 15x10x1-in. baking pans; freeze until firm. Transfer to an airtight freezer container; freeze up to 3 months. To use, for each serving, in a large skillet, saute 4 pierogi and 1/4 cup chopped onion in 1 tablespoon butter until pierogi are lightly browned and heated through; sprinkle with minced fresh parsley.", 4, 2, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.pierogi).toString()));
                 mDao.insert(new Recipe("Cheese-Stuffed Arepas", "A staple in Colombian and Venezuelan cooking, these corn cakes take no time to make, melt in your mouth, and are infinitely adaptable. Experiment with toppings like fried eggs, avocado, beans and cheese.", "Kosher salt\n" +
                         "\n" +
                         "2 cups pre-cooked white corn meal, such as P.A.N.   \n" +
@@ -144,7 +145,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "  2.   Stir together 2 1/2 cups lukewarm water and 1 1/2 teaspoons salt in a large bowl. Gradually add the corn meal into the water, using your fingers to stir and combine, until a soft and moist dough forms. \n" +
                         "  3.   Divide the dough into 8 golf ball-size balls and pat each into a patty about 5-inches wide and 1/4-inch-thick. \n" +
                         "  4.   Put a cube of mozzarella in the center of each patty. Fold the dough over the cheese, making sure the cheese is completely covered and sealed. Pat it back down until 3-inches wide and 1/2-inch-thick (see Cook's Note).\n" +
-                        "  5.  Heat the oil in a large skillet over medium-low heat until shimmering. Working in batches, cook the corn patties, until golden brown, about 5 minutes per side (making sure the oil is hot for each batch). Transfer to a cooling rack set on a rimmed baking sheet and bake until the edges are crisp and golden, about 10 minutes.", 2, 1, R.drawable.cheesestuffed_arepas));
+                        "  5.  Heat the oil in a large skillet over medium-low heat until shimmering. Working in batches, cook the corn patties, until golden brown, about 5 minutes per side (making sure the oil is hot for each batch). Transfer to a cooling rack set on a rimmed baking sheet and bake until the edges are crisp and golden, about 10 minutes.", 2, 1,Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.cheesestuffed_arepas).toString()));
                 mDao.insert(new Recipe("Pakora", "These are very yummy, and if any of you have ever had Japanese tempura coated veggies, you'll love this recipe. It's similar, yet it is unique in it's taste. Serve with a chili sauce, mint yogurt sauce, or sweet and sour sauce. Try other vegetables for dipping, such as sweet potatoes, broccoli and asparagus. ", "1 cup chickpea flour\n" +
                         "½ teaspoon ground coriander\n" +
                         "1 teaspoon salt\n" +
@@ -165,7 +166,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "Over medium high heat in a large, heavy saucepan, heat the oil to 375 degrees F (190 degrees C).\n" +
                         "Step 4\n" +
                         "\n" +
-                        "Coat the cauliflower and onions in the batter and fry them in small batches until golden brown, about 4 to 5 minutes. Drain on paper towels before serving.\n", 6, 3, R.drawable.pakora));
+                        "Coat the cauliflower and onions in the batter and fry them in small batches until golden brown, about 4 to 5 minutes. Drain on paper towels before serving.\n", 6, 3, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.pakora).toString()));
                 mDao.insert(new Recipe("Vegetable Lasagna", "Tender vegetables, a light tomato sauce, and lots of cheese make this the best vegetable lasagna recipe, ever. We really do not miss the meat. Add your favorite vegetables to this.", "14 lasagna noodles (2 extra for filling in holes)\n" +
                         "2 tablespoons extra-virgin olive oil\n" +
                         "1 cup (140 grams) chopped onion\n" +
@@ -202,7 +203,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "\n" +
                         "  3.   Add another layer of four noodles then repeat with remaining cheese and vegetables. Finish with a final layer of noodles, vegetables, parmesan cheese and mozzarella cheese.\n" +
                         "\n" +
-                        "  4.   Cover loosely with aluminum foil and bake 20 minutes, uncover then bake 15 minutes until cheese is crusty around the edges. To make the cheese golden brown on top, slide under the broiler for 1 to 2 minutes. Let rest 10 to 15 minutes before serving.\n", 3, 2, R.drawable.vegetable_lasgana));
+                        "  4.   Cover loosely with aluminum foil and bake 20 minutes, uncover then bake 15 minutes until cheese is crusty around the edges. To make the cheese golden brown on top, slide under the broiler for 1 to 2 minutes. Let rest 10 to 15 minutes before serving.\n", 3, 2, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.vegetable_lasgana).toString()));
                 mDao.insert(new Recipe("Vegetarian Spring Rolls", "Although you'll find these popular fried appetizers in many Asian cuisines, the Chinese version of spring rolls are usually filled with cabbage, maybe carrots or a few other vegetables. We made our rolls extra bright, green and springy by incorporating snow peas, minced green onions and cilantro. Shiitake mushrooms are an added umami bonus.", "For the Dipping Sauce:\n" +
                         "⅓ cup soy sauce\n" +
                         "1 tablespoon rice vinegar\n" +
@@ -232,7 +233,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "Begin assembling the spring rolls (see the story for a slideshow): Working with one wrapper, place the wrapper so that a corner is facing you, then spoon 2 tablespoons of the cooled filling onto the bottom third of the wrapper that is closest to you.\n" + "4. Lift the bottom of the wrapper and fold over the filling, flattening the wrapper around the filling so that no air bubbles form. Tuck it back. Begin folding the wrapper away from you. Fold in the sides to form an envelope-like shape. Continue to cinch and fold. Brush the top inside corner lightly with the egg white. The spring roll should measure 1-by-3½ inches. Place the spring roll on a parchment-lined sheet tray; cover with a damp paper towel. Repeat with the remaining wrappers and filling. Make ahead: You can freeze the spring rolls in a single layer on a parchment-lined baking sheet, making sure they do not touch. Once frozen, place the spring rolls in a plastic bag and store them for up to 1 month. Add 1 additional minute to the frying time for frozen spring rolls.\n" +
                         "5. Fill a wok or a medium heavy-bottomed pot with 2 inches of oil and heat to 350°. Working in batches of 4, fry the spring rolls, turning occasionally, until golden brown and crisp, 1½ to 2 minutes. Remove using a slotted spoon and transfer to a wire rack to cool.\n" +
                         "\n" +
-                        "6. Serve the spring rolls with the dipping sauce.",7, 1, R.drawable.vegetarian_spring_rolls));
+                        "6. Serve the spring rolls with the dipping sauce.",7, 1, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.vegetarian_spring_rolls).toString()));
                 mDao.insert(new Recipe("Ultimate Veggie Pizza", "Make the BEST veggie pizza at home! This mouthwatering vegetarian pizza recipe features fresh cherry tomatoes, bell peppers, artichoke, spinach and more. Recipe yields two 11-inch pizzas or 1 large (about 6 to 8 servings).", "1 batch easy whole wheat pizza dough or 1 pound store-bought pizza dough\n" +
                         "1 cup pizza sauce or marinara\n" +
                         "2 cups baby spinach\n" +
@@ -249,7 +250,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "  2.   Spread pizza sauce evenly over the two pizzas, leaving about 1 inch bare around the edges. Evenly distribute the spinach on top of the sauce, followed by the cheese (use all three cups if you want a cheesy pizza as shown here).\n" +
                         "  3.   Top the pizzas with artichoke, bell pepper, red onion, tomatoes, olives and almonds (if using).\n" +
                         "  4.   Bake pizzas individually on the top rack until the crust is golden and the cheese is golden and bubbly, about 10 to 12 minutes (or significantly less, if you’re using a baking stone/steel—keep an eye on it).\n" +
-                        "  5.   Transfer pizzas to a cutting board and sprinkle with with fresh basil, red pepper flakes and Parmesan, if using. Slice and serve! Leftover pizza keeps well in the refrigerator for 4 days, or for several months in the freezer.\n", 3, 2, R.drawable.ultimate_vegetarian_pizza));
+                        "  5.   Transfer pizzas to a cutting board and sprinkle with with fresh basil, red pepper flakes and Parmesan, if using. Slice and serve! Leftover pizza keeps well in the refrigerator for 4 days, or for several months in the freezer.\n", 3, 2, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.ultimate_vegetarian_pizza).toString()));
                 mDao.insert(new Recipe("Chili and Grilled Corn", "Enjoy this winter warmer! This dish is packed with fresh flavour and vegetarian protein.", "For the chilli:\n" +
                         "2 x 400g cans black beans, drained and rinsed (we love Chantal Organics)\n" +
                         "1 x 400g can chickpeas, drained and rinsed (we love Chantal Organics)\n" +
@@ -268,7 +269,7 @@ public abstract class RecipeRoomDatabase extends RoomDatabase {
                         "1 clove garlic, crushed and finely chopped\n" +
                         "1/2 tsp smoked paprika", "Black Beans\n" + "ChickPeas\n" + "Tomatoes\n" + "Smoked Paprika\n" + "Cumin Powder\n" + "Garlic Powder\n" + "Salt\n" + "Pepper\n" + "Onion\n" + "Garlic\n" +
                         "Avocado Oil\n" + "Corn\n", "Make the chilli. Fry onions in a deep frying pan with a drizzle of oil until golden for about 5 minutes. Add garlic, smoked paprika, cumin and garlic powder and continue to cook for 2 minutes. Add the tomatoes, black beans and chickpeas. Season with salt and pepper. Simmer for 10 minutes, stirring every couple of minutes.\n" +
-                        "Grill the corn: Drain, rinse and pat dry the corn if using canned. Heat a good drizzle of avocado oil in a frying pan over medium high heat. Add the corn, garlic and smoked paprika. Fry for 5 minutes or until corn kernels are starting to char.", 8, 0, R.drawable.chili_and_grilled_corn));
+                        "Grill the corn: Drain, rinse and pat dry the corn if using canned. Heat a good drizzle of avocado oil in a frying pan over medium high heat. Add the corn, garlic and smoked paprika. Fry for 5 minutes or until corn kernels are starting to char.", 8, 0, Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +R.drawable.chili_and_grilled_corn).toString()));
             }
             return null;
         }

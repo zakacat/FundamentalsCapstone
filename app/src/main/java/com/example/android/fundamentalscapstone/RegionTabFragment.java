@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.List;
 
 //Refer to AbcTabFragment for details.
@@ -55,6 +56,7 @@ public class RegionTabFragment extends Fragment {
 
         return regionFragment;
     }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = -1;
@@ -63,14 +65,20 @@ public class RegionTabFragment extends Fragment {
         } catch (Exception e) {
             return super.onContextItemSelected(item);
         }
-            if(getUserVisibleHint()) {
-                if (item.getItemId() == R.id.menu_delete) {
-                    //Delete the recycler view at this position.
-                    Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
-                    mRecipeViewModel.deleteRecipe(myRecipe);
-                    Log.d(LOG_TAG, "Deleted a recipe from RegionTabFragment.");
+        if (getUserVisibleHint()) {
+            if (item.getItemId() == R.id.menu_delete) {
+                //Delete the recycler view at this position.
+                Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
+                String imageToDelete = myRecipe.getImageResource();
+                mRecipeViewModel.deleteRecipe(myRecipe);
+                if (imageToDelete != null) {
+                    File recipeImage = new File(imageToDelete);
+                    recipeImage.delete();
+                    Log.d(LOG_TAG, "Deleted an image from RegionTabFragment.");
                 }
+                Log.d(LOG_TAG, "Deleted a recipe from RegionTabFragment.");
             }
+        }
         return super.onContextItemSelected(item);
     }
 }

@@ -431,5 +431,17 @@ ItemTouchHelper| check (and referenced twice)
 - *I believe that I can use the common camera intent as discussed on https://developer.android.com/guide/components/intents-common#CameraStill to open a camera app and return the picture that is taken by the user and then save it in the drawables folder... and retrieve that resource ID somehow upon creation???*
 
 - *I have gotten the image capture to work and I am display that bitmap thumbnail on the image button which looks great! Next step is to save the image in drawables and then save the resource ID of this image to the new Recipe! Then I will want to be able to delete the image when the Recipe is deleted...*
-
+*
 - *This part is proving a bit more difficult... I think that I can save the file externally or internally and make it have private access, but it will be outside of my resource files, so I will not be able to generate a resource ID... which is how I access the photos in the first place... Maybe I can store the file path and access the photos that way... hmmm*
+
+**July 1 / 2021**
+
+- *Happy Canada Day alongside the recognition of the terrible things that must've taken place at the Canadian residential schools*
+
+- *I am going to now change the Resource ID (int) attribute to a Image File Path (String) attribute to hopefully be able to access it... with Glide somehow.*
+
+- *Well, that worked surprisingly easily, now I will work on being able to save the user images and access where evere they are stored...*
+
+- *Okay, all good, I think. I got that to work and I somewhat understand what is going on. Now I need to make sure that I can delete the image at the same time that the recipe is deleted as not to load the users phone with a bunch of useless pictures that cannot be accessed!*
+
+- *Okay, I think I have taken care of deleting the image file at the same time as deleting the image. I thought that their might have been an issue with deleting my drawable files, but I don't think they can be deleted in this fashion*

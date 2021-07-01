@@ -39,7 +39,7 @@ public class Recipe {
     private int mTypeOfMeal;
 
     @ColumnInfo(name = "Image Path")
-    private int mImageResource;
+    private String mImageResource;
 
 
     // I would like to also find a way to store an image... I think I can save the file locally and access it with the saved file path.
@@ -48,7 +48,7 @@ public class Recipe {
 
     //The constructor needs a input for all the parameters/attributes. Null input should be avoided.
     //Null cases should be replaced with an empty string "".
-    public Recipe(@NonNull String title, String briefDescription, String ingredientsWithMeasurements, String ingredientsForShopping, String instructions, int regionOfOrigin, int typeOfMeal, int imageResource) {
+    public Recipe(@NonNull String title, String briefDescription, String ingredientsWithMeasurements, String ingredientsForShopping, String instructions, int regionOfOrigin, int typeOfMeal, String imageResource) {
         this.mTitle = title;
         this.mBriefDescription = briefDescription;
         this.mIngredientsWithMeasurements = ingredientsWithMeasurements;
@@ -89,5 +89,5 @@ public class Recipe {
         return mTypeOfMeal;
     }
 
-    public int getImageResource() {return mImageResource;}
+    public String getImageResource() {return mImageResource;}
 }

@@ -121,7 +121,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
             //Here I will load the images as I see fit. I will start with the starter data and I also
             //included a clause as to avoid a null circumstance.
-            if (current.getImageResource() != 0) {
+            if (current.getImageResource() != null) {
                 Glide.with(holder.itemView.getContext()).load(current.getImageResource()).into(holder.recipeImageView);
             }
             else {
