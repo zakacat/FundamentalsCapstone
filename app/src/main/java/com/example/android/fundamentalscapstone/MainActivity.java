@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -18,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.File;
+import java.security.acl.Owner;
+import java.util.List;
 
 import static com.example.android.fundamentalscapstone.DetailActivity.EXTRA_REPLY;
 
@@ -170,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.menu_clear_all: {
+                mRecipeViewModel.getAllRecipesABC().observe(this, new Observer<List<Recipe>>() {
+                    @Override
+                    public void onChanged(List<Recipe> recipes) {
+                    for (int i = 0; i < recipes.size(); i ++){
+                        File imageFile = new File(recipes.get(i).getImageResource());
+                        imageFile.delete();
+                    }
+                    }
+                });
                 mRecipeViewModel.deleteAll();
                 return true;
             }
