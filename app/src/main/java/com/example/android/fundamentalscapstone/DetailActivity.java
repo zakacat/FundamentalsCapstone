@@ -2,12 +2,18 @@ package com.example.android.fundamentalscapstone;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
+import androidx.core.net.UriCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.UriPermission;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +23,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.UriLoader;
+
+import java.io.File;
+import java.net.URI;
 
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_RECIPE_PRIMARY_KEY = "recipe_id";
     public static final String EXTRA_REPLY = "com.example.android.fundamentalscapstone.extra.REPLY";
     private RecipeViewModel mRecipeViewModel;
+    private String mImageResource, mBriefDescription;
     private Recipe mOpenRecipe;
 
     @Override
@@ -60,18 +71,24 @@ public class DetailActivity extends AppCompatActivity {
             public void onChanged(Recipe recipe) {
                 if (recipe.getImageResource() != null) {
                     Glide.with(getApplicationContext()).load(recipe.getImageResource()).into(imageView);
+                    mImageResource = recipe.getImageResource();
                 }
-                else
+                else {
                     Glide.with(getApplicationContext()).load(R.drawable.image_not_found).into(imageView);
+                }
                 //And Here is where I can update the Widgets with the correct attributes.
                 titleTextView.setText(recipe.getTitle());
                 //Region and Meal attributes are stored as ints so they are converted to Strings to
                 //be displayed into text views.
                 regionTextView.setText(changeIntToRegion(recipe.getRegionOfOrigin()));
+
                 mealTextView.setText(changeIntToMeal(recipe.getTypeOfMeal()));
 
                 briefDescriptionTextView.setText(recipe.getBriefDescription());
+                mBriefDescription = "Summary:\n" + recipe.getBriefDescription() + "\n\n";
+
                 ingredientsTextView.setText(recipe.getIngredientsWithMeasurements());
+
                 instructionsTextView.setText(recipe.getInstructions());
 //                mOpenRecipe = recipe;
             }
@@ -179,6 +196,19 @@ public class DetailActivity extends AppCompatActivity {
 //                mRecipeViewModel.deleteRecipe(mOpenRecipe);
                 //I can't do it this way... I need to pass this information back to MainActivity and
                 //then I should be able to delete the recipe from there as there are listeners.
+                return true;
+            }
+            case R.id.menu_share:{
+                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+
+                //Add my concatenated values to value of the recipe... woot woot
+                //However, this only works with the files the recipes that are added. This does not work with starter data...maybe I need to create a new file on startup ...
+                sendIntent.setType("image/*");
+                sendIntent.putExtra("sms_body", mBriefDescription + "To get access to the full recipe, download Zakacat's Recipe App from the  Google Play Store.");
+                sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, "com.example.android.fundamentalscapstone", (new File (mImageResource))));
+
+                Intent chooser = Intent.createChooser(sendIntent, "Share this recipe with...");
+                startActivity(chooser);
                 return true;
             }
             default:

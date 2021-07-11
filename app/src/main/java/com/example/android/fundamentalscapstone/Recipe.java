@@ -42,6 +42,7 @@ public class Recipe {
     private String mImageResource;
 
 
+
     // I would like to also find a way to store an image... I think I can save the file locally and access it with the saved file path.
     //private String mImageURI; I can refer to 5.2 Cards and colors.
 

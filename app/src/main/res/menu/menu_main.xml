@@ -24,6 +24,11 @@
         android:orderInCategory="30"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/menu_share"
+        android:title="Share"
+        android:orderInCategory="30"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/menu_clear_all"
         android:title="Clear Recipe Book"
         android:orderInCategory="40"

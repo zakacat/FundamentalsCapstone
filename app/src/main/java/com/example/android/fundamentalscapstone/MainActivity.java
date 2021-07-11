@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         // I can programmatically remove the add option like this >>> menu.removeItem(R.id.menu_add); >>> nice
         menu.removeItem(R.id.menu_delete_this);
+        menu.removeItem(R.id.menu_share);
         return true;
     }
 

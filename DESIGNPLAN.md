@@ -445,3 +445,23 @@ ItemTouchHelper| check (and referenced twice)
 - *Okay, all good, I think. I got that to work and I somewhat understand what is going on. Now I need to make sure that I can delete the image at the same time that the recipe is deleted as not to load the users phone with a bunch of useless pictures that cannot be accessed!*
 
 - *Okay, I think I have taken care of deleting the image file at the same time as deleting the image. I thought that their might have been an issue with deleting my drawable files, but I don't think they can be deleted in this fashion*
+
+**July 3 / 2021**
+
+- *It would be cool to add the share recipe option via the Detail Activity... By text or other messaging service or post on Facebook? or on Instagram? that would be sick*
+
+**July 7 / 2021**
+
+- *I spent the last weekend working on my joke app that spams people with text messages, so this weekend I need to work on this app. What feature should I work on this weekend?? I think I would like to add the delete and share options in the detail Activity. Then I think I will basically need to work on table sections Lesson 7 and 8 with Broadcat Receiver, Notifications, Alarm Manager, and Job Scheduler. After that then I can work on the testing and debugging (which should have been built alongside in the first place).*
+
+- *To be honest, I am getting a bit bored with this project but mostly I just think that the finished product won't be anything amazing... I need the practice though... I would just like to have this part-time job lined of for the summer time and this project done so that I can start from scratch my other app that I think will actually be something worth putting on the store.*
+
+**July 11 / 2021**
+
+- *I having lots of difficulty trying to figure out how to share the recipes. I understand how I can send the user created recipes, but it is difficult to share the starter data. The issue is that the starter data accesses a drawable which is source data and the other images are saved in on the external storage.*
+
+- *OH MY GOD, I have been spending hours on this jsut to realize that I need to clear the database of recipes before the database re-populate on startup and actually use my code that I addded to the database class. Ugh, crazy...*
+
+- *Okay... I finally got that to work, now I am going to concatenate the text data to be sent and hopefully, I can send that too. Then I need to figure out a way to delete the files when I delete the recipes! Oh no, apperantly this has already been handled!*
+
+- *I think I am getting a bit carried away here... I can send the recipes up to a certain text amount via text... That somewhat answers my woes... There is still too much information... I know!*  

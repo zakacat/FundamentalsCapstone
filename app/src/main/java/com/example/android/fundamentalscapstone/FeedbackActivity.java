@@ -171,7 +171,7 @@ public class FeedbackActivity extends AppCompatActivity {
         EditText smsEditText = findViewById(R.id.feedback_input_text_edit);
         // Get the text of the SMS message.
         String sms = smsEditText.getText().toString();
-        // Create the intent.
+        // Create the intent.       // I am not sure if I need to use an intent alongside a smsManager
         Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
         // Set the data for the intent as the phone number.
         smsIntent.setData(Uri.parse(formattedNumber));
