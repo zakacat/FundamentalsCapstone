@@ -1,5 +1,6 @@
 package com.example.android.fundamentalscapstone;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.net.Uri;
@@ -35,6 +37,8 @@ public class DetailActivity extends AppCompatActivity {
     private RecipeViewModel mRecipeViewModel;
     private String mImageResource, mBriefDescription;
     private Recipe mOpenRecipe;
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    private boolean mIsDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +76,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (recipe.getImageResource() != null) {
                     Glide.with(getApplicationContext()).load(recipe.getImageResource()).into(imageView);
                     mImageResource = recipe.getImageResource();
-                }
-                else {
+                } else {
                     Glide.with(getApplicationContext()).load(R.drawable.image_not_found).into(imageView);
                 }
                 //And Here is where I can update the Widgets with the correct attributes.
@@ -90,11 +93,12 @@ public class DetailActivity extends AppCompatActivity {
                 ingredientsTextView.setText(recipe.getIngredientsWithMeasurements());
 
                 instructionsTextView.setText(recipe.getInstructions());
-//                mOpenRecipe = recipe;
+                mOpenRecipe = recipe;
             }
         });
 
     }
+
     //Method to convert the int representation of the region to the text representation
     private String changeIntToRegion(int regionNum) {
         switch (regionNum) {
@@ -129,20 +133,21 @@ public class DetailActivity extends AppCompatActivity {
                 return "no data";
         }
     }
+
     //Method to convert the int representation of the meal to the text representation
     private String changeIntToMeal(int mealNum) {
         switch (mealNum) {
-                case 0:
-                    return "Breakfast";
-                case 1:
-                    return "Lunch";
-                case 2:
-                    return "Supper";
-                case 3:
-                    return "Snack";
-                default:
-                    return "no data";
-            }
+            case 0:
+                return "Breakfast";
+            case 1:
+                return "Lunch";
+            case 2:
+                return "Supper";
+            case 3:
+                return "Snack";
+            default:
+                return "no data";
+        }
     }
 
     @Override
@@ -159,6 +164,7 @@ public class DetailActivity extends AppCompatActivity {
         menu.removeItem(R.id.menu_feedback);
         return true;
     }
+
     //Here is where I can add the intents for the dialogs and activities...
     //A dialog for add, an activity for settings (see the text), a dialog for about, and a dialog (for practice) or activity for feedback.
     @Override
@@ -185,7 +191,7 @@ public class DetailActivity extends AppCompatActivity {
                 mRecipeViewModel.deleteAll();
                 return true;
             }
-            case R.id.menu_delete_this:{
+            case R.id.menu_delete_this: {
                 //I will at code to this later to delete the current recipe and send the user
                 //back to the main screen.
 //                Intent replyIntent = new Intent(this, MainActivity.class);
@@ -196,17 +202,37 @@ public class DetailActivity extends AppCompatActivity {
 //                mRecipeViewModel.deleteRecipe(mOpenRecipe);
                 //I can't do it this way... I need to pass this information back to MainActivity and
                 //then I should be able to delete the recipe from there as there are listeners.
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Do you wish to continue?");
+                builder.setMessage("Clicking \"Yes\" will delete the selected recipe and image from the database. Are you sure that you would like to continue?");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Nothing Happens and the dialog should close.
+                        mIsDelete = false; //This is unnecessary, but it makes me feel safe
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mIsDelete = true;
+                        finish();
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 return true;
             }
-            case R.id.menu_share:{
+            case R.id.menu_share: {
                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
 
                 //Add my concatenated values to value of the recipe... woot woot
                 //However, this only works with the files the recipes that are added. This does not work with starter data...maybe I need to create a new file on startup ...
                 sendIntent.setType("image/*");
                 sendIntent.putExtra("sms_body", mBriefDescription + "To get access to the full recipe, download Zakacat's Recipe App from the  Google Play Store.");
-                sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, "com.example.android.fundamentalscapstone", (new File (mImageResource))));
-
+                sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, "com.example.android.fundamentalscapstone", (new File(mImageResource))));
+                //Currently, this intent will send all the info in a SMS/MMS message, but only the picture when sendig through other media.
                 Intent chooser = Intent.createChooser(sendIntent, "Share this recipe with...");
                 startActivity(chooser);
                 return true;
@@ -217,5 +243,17 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mIsDelete) {
+            String imageToDelete = mOpenRecipe.getImageResource();
+            mRecipeViewModel.deleteRecipe(mOpenRecipe);
+            if (imageToDelete != null) {
+                File recipeImage = new File(imageToDelete);
+                recipeImage.delete();
+                Log.d(LOG_TAG, "Deleted an image from DetailActivity.");
+            }
+        }
+    }
 }

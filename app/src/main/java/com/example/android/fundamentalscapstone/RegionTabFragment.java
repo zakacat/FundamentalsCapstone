@@ -1,8 +1,10 @@
 package com.example.android.fundamentalscapstone;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -68,15 +70,35 @@ public class RegionTabFragment extends Fragment {
         if (getUserVisibleHint()) {
             if (item.getItemId() == R.id.menu_delete) {
                 //Delete the recycler view at this position.
-                Recipe myRecipe = mAdapter.getRecipeAtPosition(position);
-                String imageToDelete = myRecipe.getImageResource();
-                mRecipeViewModel.deleteRecipe(myRecipe);
-                if (imageToDelete != null) {
-                    File recipeImage = new File(imageToDelete);
-                    recipeImage.delete();
-                    Log.d(LOG_TAG, "Deleted an image from RegionTabFragment.");
-                }
-                Log.d(LOG_TAG, "Deleted a recipe from RegionTabFragment.");
+                int localPosition = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(regionFragment.getContext());
+                builder.setTitle("Do you wish to continue?");
+                builder.setMessage("Clicking \"Yes\" will delete the selected recipe and image from the database. Are you sure that you would like to continue?");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Nothing Happens and the dialog should close.
+
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Recipe myRecipe = mAdapter.getRecipeAtPosition(localPosition);
+                        String imageToDelete = myRecipe.getImageResource();
+                        mRecipeViewModel.deleteRecipe(myRecipe);
+                        if (imageToDelete != null) {
+                            File recipeImage = new File(imageToDelete);
+                            recipeImage.delete();
+                            Log.d(LOG_TAG, "Deleted an image from RegionTabFragment.");
+                        }
+                        Log.d(LOG_TAG, "Deleted a recipe from RegionTabFragment.");
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
         return super.onContextItemSelected(item);

@@ -2,15 +2,18 @@ package com.example.android.fundamentalscapstone;
 
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 //      This is me trying to figure out how to get the delete function to work...
@@ -176,16 +178,36 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.menu_clear_all: {
-                mRecipeViewModel.getAllRecipesABC().observe(this, new Observer<List<Recipe>>() {
+                LifecycleOwner owner = this; //Wow, this seems like cheating. Is there a way to see what "this" is directly referencing???
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Do you wish to continue?");
+                builder.setMessage("Clicking \"Yes\" will delete  ALL the recipes and images from the database. Are you sure that you would like to continue?");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onChanged(List<Recipe> recipes) {
-                    for (int i = 0; i < recipes.size(); i ++){
-                        File imageFile = new File(recipes.get(i).getImageResource());
-                        imageFile.delete();
-                    }
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Nothing Happens and the dialog should close.
+
                     }
                 });
-                mRecipeViewModel.deleteAll();
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mRecipeViewModel.getAllRecipesABC().observe(owner, new Observer<List<Recipe>>() {
+                            @Override
+                            public void onChanged(List<Recipe> recipes) {
+                                for (int i = 0; i < recipes.size(); i++) {
+                                    File imageFile = new File(recipes.get(i).getImageResource());
+                                    imageFile.delete();
+                                }
+                            }
+                        });
+                        mRecipeViewModel.deleteAll();
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 return true;
             }
             case R.id.menu_delete_this: {
