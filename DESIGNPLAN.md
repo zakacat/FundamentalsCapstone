@@ -464,4 +464,30 @@ ItemTouchHelper| check (and referenced twice)
 
 - *Okay... I finally got that to work, now I am going to concatenate the text data to be sent and hopefully, I can send that too. Then I need to figure out a way to delete the files when I delete the recipes! Oh no, apperantly this has already been handled!*
 
-- *I think I am getting a bit carried away here... I can send the recipes up to a certain text amount via text... That somewhat answers my woes... There is still too much information... I know!*  
+- *I think I am getting a bit carried away here... I can send the recipes up to a certain text amount via text... That somewhat answers my woes... There is still too much information... I know!*
+
+**July 12 / 2021**
+
+- *So, I figured out the share feature for the most part, I think I will move on the delete again. Currently, this intent will send all the info in a SMS/MMS message, but only the picture when sendig through other media.*
+
+- *This morning, I would like to try and tackle the delete option that is within the detail menu. It is a feature that seems so intuitive, that I don't think I can ignore it.*
+
+- *For the deleting of the Recipe, I think that I want to complete the activity intent with a delayed call to delete the recipee... It shouldn't be that difficult, in theory.*
+
+- *Wow, that was a lot easier this time when I just sat there and thought about it. I called finish() in onOptionsItemSelected() which calls onDestroy() and in onDestroy() I was able to implement the code  necessary to delete the recipe from the database and to delete the accompying image file.*
+
+- *Now, I think that it would be important to include a confirmation dialog with each option to delete (and there are now 3 ways that the user can delete the recipes). I think that there is a pretty cookie cutter implementation that I can do where I don't need to rewrite a dialog class. There is a way to execute that dialog quite painlessly. I can now copy and paste that section of code to the various areas of the app that the user can delete the recipes from*
+
+- *Okay, that was a great run then, I will push this commit and then I am going to start working on Lesson 7 and 8 which basically includes a bunch of background tasks - Broadcat Receiver, Notifications, Alarm Manager, and Job Scheduler.*
+
+- *First, I am going to just modify the DetailActivity output a little bit as to make the apperance a little better. I could modify this programatically, but I think I will just alter the layout file without actually accessing the widgets in the activity.*
+
+**July 17 / 2021**
+
+- *I am going to start this morning with the broadcast. I will want to make a custom broadcast to be sent and received*
+
+- *I don't remember much about the Broadcast system, so I am going to read this article https://developer.android.com/guide/components/broadcasts and https://developer.android.com/codelabs/android-training-broadcast-receivers?index=..%2F..%2Fandroid-training#3. It seems that the broadcasts are used to send and recieve background information. According to my previous table, I was plannig on receiving a broadcast about wifi connection (originally for downloading recipes, but I think I will add it with a toast or snackbar (I don't have one of those yet) that tells the user that they can now share the recipe on wifi if they like)*
+
+- *As for the custom broadcast...*
+
+- *I succesfully made it so the user can see the state of the wifi, the user is also informed when they should share recipes and when they shouldn't. I decided to use the snackbar becuase I could, but in this case, it is effectively the same as a toast message as there are no clickable options. Nevermind, I decided to maintain the Toast course as that makes it so the user can see the toast in any activity. Maybe, I will use the snackbar as part of my custom broadcast?* 

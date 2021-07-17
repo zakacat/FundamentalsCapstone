@@ -65,28 +65,56 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/brief_description_detail"
+                android:id="@+id/brief_description_title_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/meal_detail"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="bold"
+                android:text="Summary:" />
+
+            <TextView
+                android:id="@+id/brief_description_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brief_description_title_detail"
                 android:text="Brief Description"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            <TextView
+                android:id="@+id/ingredients_title_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brief_description_detail"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="bold"
+                android:text="Ingredients:" />
 
             <TextView
                 android:id="@+id/ingredients_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/brief_description_detail"
+                android:layout_below="@+id/ingredients_title_detail"
                 android:text="Ingredients"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            <TextView
+                android:id="@+id/instructions_title_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ingredients_detail"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="bold"
+                android:text="Instructions:" />
 
             <TextView
                 android:id="@+id/instructions_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ingredients_detail"
+                android:layout_below="@id/instructions_title_detail"
                 android:text="Instructions"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:layout_marginBottom="16dp"/>
         </RelativeLayout>
 
     </ScrollView>

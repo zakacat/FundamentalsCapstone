@@ -15,7 +15,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecipeViewModel mRecipeViewModel;
+    private CustomReceiver mReceiver = new CustomReceiver();
 
 
     @Override
@@ -138,6 +141,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        // Register the receiver using the activity context.
+        this.registerReceiver(mReceiver, filter);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        //Unregister the receiver
+        this.unregisterReceiver(mReceiver);
+        super.onDestroy();
     }
 
 
