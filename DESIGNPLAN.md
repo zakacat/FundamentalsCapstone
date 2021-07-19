@@ -490,4 +490,12 @@ ItemTouchHelper| check (and referenced twice)
 
 - *As for the custom broadcast...*
 
-- *I succesfully made it so the user can see the state of the wifi, the user is also informed when they should share recipes and when they shouldn't. I decided to use the snackbar becuase I could, but in this case, it is effectively the same as a toast message as there are no clickable options. Nevermind, I decided to maintain the Toast course as that makes it so the user can see the toast in any activity. Maybe, I will use the snackbar as part of my custom broadcast?* 
+- *I succesfully made it so the user can see the state of the wifi, the user is also informed when they should share recipes and when they shouldn't. I decided to use the snackbar becuase I could, but in this case, it is effectively the same as a toast message as there are no clickable options. Nevermind, I decided to maintain the Toast course as that makes it so the user can see the toast in any activity. Maybe, I will use the snackbar as part of my custom broadcast?*
+
+**July 18 / 2021**
+
+- *I think that I will add the custom broadcast for when a recipe is shared... I will also receive it with the app, just because... I don't think the user will benefit much except to recieve a confirmation that (at least) the code for the share function has executed.*
+
+- *Three hours of procrastination and 15 minutes of work, I got the custom broadcast to send and be received when the user goes to share the recipe. There is not much use in this, but to demonstrate that it can be done.*
+
+- *Next weekend will be lesson number 8 which includes Notifications, Alarm Manager, and Job Scheduler. I have time to think about how I want to implement these things. I am excited for this job to finished, I think. But after lesson 8, then I have the debugging and the unit tests to do, and then a final clean up of the app...* 

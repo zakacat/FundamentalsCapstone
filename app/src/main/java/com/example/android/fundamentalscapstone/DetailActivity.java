@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -41,6 +42,9 @@ public class DetailActivity extends AppCompatActivity {
     private Recipe mOpenRecipe;
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private boolean mIsDelete = false;
+    private static final String ACTION_CUSTOM_BROADCAST =
+            BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
+
 
 
 
@@ -240,6 +244,8 @@ public class DetailActivity extends AppCompatActivity {
                 //Currently, this intent will send all the info in a SMS/MMS message, but only the picture when sendig through other media.
                 Intent chooser = Intent.createChooser(sendIntent, "Share this recipe with...");
                 startActivity(chooser);
+                Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent);
                 return true;
             }
             default:

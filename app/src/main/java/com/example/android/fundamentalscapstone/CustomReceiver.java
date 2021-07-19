@@ -12,34 +12,41 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class CustomReceiver extends BroadcastReceiver {
 
+    private static final String ACTION_CUSTOM_BROADCAST =
+            BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String toastMessage = "unknown intent action";
-            int info = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
+        int info = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
 
-            switch (info){
-                case WifiManager.WIFI_STATE_UNKNOWN:{
-                    toastMessage = "Wifi is unknown";
-                    break;
-                }
-                case WifiManager.WIFI_STATE_DISABLED:{
-                    toastMessage = "Wifi is disconnected. Avoid recipe sharing.";
-                    break;
-                }
-                case WifiManager.WIFI_STATE_DISABLING:{
-                    toastMessage = "Wifi is disconnecting";
-                    break;
-                }
-                case WifiManager.WIFI_STATE_ENABLED:{
-                    toastMessage = "Wifi is connected. Share recipes without using data.";
-                    break;
-                }
-                case WifiManager.WIFI_STATE_ENABLING:{
-                    toastMessage = "Wifi is connecting";
-                    break;
-                }
+        switch (info) {
+            case WifiManager.WIFI_STATE_UNKNOWN: {
+                toastMessage = "Wifi is unknown";
+                break;
             }
-            //Display the toast.
+            case WifiManager.WIFI_STATE_DISABLED: {
+                toastMessage = "Wifi is disconnected. Avoid recipe sharing.";
+                break;
+            }
+            case WifiManager.WIFI_STATE_DISABLING: {
+                toastMessage = "Wifi is disconnecting";
+                break;
+            }
+            case WifiManager.WIFI_STATE_ENABLED: {
+                toastMessage = "Wifi is connected. Share recipes without using data.";
+                break;
+            }
+            case WifiManager.WIFI_STATE_ENABLING: {
+                toastMessage = "Wifi is connecting";
+                break;
+            }
+        }
+        if (intent.getAction() == ACTION_CUSTOM_BROADCAST){
+            toastMessage = "Zakacat's Recipe App is attempting to share a recipe.";
+        }
+        //Display the toast.
 //
 //        Snackbar snackbar = Snackbar.make(context, ((Activity)context).findViewById(R.id.activity_main),toastMessage, Snackbar.LENGTH_LONG);
 //        snackbar.show();

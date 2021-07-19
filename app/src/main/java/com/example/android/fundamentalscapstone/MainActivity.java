@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecipeViewModel mRecipeViewModel;
     private CustomReceiver mReceiver = new CustomReceiver();
+    private CustomReceiver mCustomReceiver = new CustomReceiver();
+    private static final String ACTION_CUSTOM_BROADCAST =
+            BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
 
 
     @Override
@@ -142,11 +146,17 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-
+        //This code is for the normal broadcast receiver
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         // Register the receiver using the activity context.
         this.registerReceiver(mReceiver, filter);
+
+        //This code is for the custom broadcast receiver
+        LocalBroadcastManager.getInstance(this)
+             .registerReceiver(mCustomReceiver,
+                          new IntentFilter(ACTION_CUSTOM_BROADCAST));
+
 
     }
 
@@ -154,6 +164,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         //Unregister the receiver
         this.unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(this)
+          .unregisterReceiver(mCustomReceiver);
+
         super.onDestroy();
     }
 
