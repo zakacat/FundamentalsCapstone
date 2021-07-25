@@ -14,7 +14,12 @@ public class CustomReceiver extends BroadcastReceiver {
 
     private static final String ACTION_CUSTOM_BROADCAST =
             BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
+    private Activity mActivity;
 
+    public CustomReceiver(Activity activity) {
+        super();
+        mActivity = activity;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,33 +29,38 @@ public class CustomReceiver extends BroadcastReceiver {
         switch (info) {
             case WifiManager.WIFI_STATE_UNKNOWN: {
                 toastMessage = "Wifi is unknown";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
             case WifiManager.WIFI_STATE_DISABLED: {
                 toastMessage = "Wifi is disconnected. Avoid recipe sharing.";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
             case WifiManager.WIFI_STATE_DISABLING: {
                 toastMessage = "Wifi is disconnecting";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
             case WifiManager.WIFI_STATE_ENABLED: {
                 toastMessage = "Wifi is connected. Share recipes without using data.";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
             case WifiManager.WIFI_STATE_ENABLING: {
                 toastMessage = "Wifi is connecting";
+                Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
         }
-        if (intent.getAction() == ACTION_CUSTOM_BROADCAST){
-            toastMessage = "Zakacat's Recipe App is attempting to share a recipe.";
+
+        if (intent.getAction().equals(ACTION_CUSTOM_BROADCAST)) {
+            toastMessage = "Zakacat\'s Recipe App is attempting to share a recipe.";
+            Snackbar snackbar = Snackbar.make(context, mActivity.findViewById(R.id.activity_main), toastMessage, Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
         //Display the toast.
-//
-//        Snackbar snackbar = Snackbar.make(context, ((Activity)context).findViewById(R.id.activity_main),toastMessage, Snackbar.LENGTH_LONG);
-//        snackbar.show();
-        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
+
 
     }
 

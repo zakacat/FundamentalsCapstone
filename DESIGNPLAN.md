@@ -498,4 +498,22 @@ ItemTouchHelper| check (and referenced twice)
 
 - *Three hours of procrastination and 15 minutes of work, I got the custom broadcast to send and be received when the user goes to share the recipe. There is not much use in this, but to demonstrate that it can be done.*
 
-- *Next weekend will be lesson number 8 which includes Notifications, Alarm Manager, and Job Scheduler. I have time to think about how I want to implement these things. I am excited for this job to finished, I think. But after lesson 8, then I have the debugging and the unit tests to do, and then a final clean up of the app...* 
+- *Next weekend will be lesson number 8 which includes Notifications, Alarm Manager, and Job Scheduler. I have time to think about how I want to implement these things. I am excited for this job to finished, I think. But after lesson 8, then I have the debugging and the unit tests to do, and then a final clean up of the app...*
+
+**July 19 / 2021**
+
+- *Seeming as I don't really have any passive interconnectiity yet with my app (and there isn't really any in the scope of my capstone app) there is not much going on that the user can be notified about as the user must interact with all the current actions within the app  itself. So, I think that if I just send a notification of confirmation when the user deletes a recipe... that should suffice my requirements that I have laid out for myself... Actually, when referring to my app design plan table, it seems that I wanted to pair the AlarmManager and Notification together to remind the user to look at the app near meal times*
+
+- *I have only written a few lines of code and now I receiving the error "AAPT: error: failed writing to 'C:\Users\zak_t\Documents\GitHub\FundamentalsCapstone\app\build\intermediates\runtime_symbol_list\debug\R.txt': The data is invalid. (13)." and that is a bit frustrating. I will now have to figure out how to get that to work*
+
+**July 24 / 2021**
+
+- *I had to run Android Studio as administrator as to allow to write the new R.txt file???? I am glad that is figured out tho. Yay!, now I can go back to working on the notifications and hopefully get a bunch of work done this weekend.*
+
+**July 25 / 2021**
+
+- *It to reiterate to myself, I am creating a notification that will repeat at certain times, maybe 7am, 11am, and 5pm to remind the user to start considering the next meal.*
+
+- *Although I am a bit disorientated, I think that I have successfully implemented the Notifications/Alarm Manager. I do not have settings for them, but I am not too concerened with that. I understand the principles of this concept and I would like to power on and finish this project (at least roughly) as soon as possible. I am ready to maybe do an online course or two and then go back to my other app that I would like to have ready for semester start as it will be being constructed alongside my other studies, and hopefully will be helpful to myself in many ways*
+
+- *Now I just need to figure out how I want to include the JobSheduler... Maybe here I can display the snackBar with "There are no background tasks that need to be carried out" or something like that...* 

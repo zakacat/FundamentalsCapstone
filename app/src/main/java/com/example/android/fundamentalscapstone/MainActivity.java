@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -14,12 +15,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +36,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
 import java.security.acl.Owner;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.example.android.fundamentalscapstone.DetailActivity.EXTRA_REPLY;
@@ -38,10 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private RecipeViewModel mRecipeViewModel;
-    private CustomReceiver mReceiver = new CustomReceiver();
-    private CustomReceiver mCustomReceiver = new CustomReceiver();
+    private CustomReceiver mReceiver = new CustomReceiver(this);
+    private CustomReceiver mCustomReceiver = new CustomReceiver(this);
     private static final String ACTION_CUSTOM_BROADCAST =
             BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
+    private NotificationManager mNotificationManager;
+    private static final int BREAKFAST_NOTIFICATION_ID = 0, LUNCH_NOTIFICATION_ID = 1, SUPPER_NOTIFICATION_ID = 2;
+    private static final String PRIMARY_CHANNEL_ID =
+            "primary_notification_channel";
 
 
     @Override
@@ -154,10 +167,97 @@ public class MainActivity extends AppCompatActivity {
 
         //This code is for the custom broadcast receiver
         LocalBroadcastManager.getInstance(this)
-             .registerReceiver(mCustomReceiver,
-                          new IntentFilter(ACTION_CUSTOM_BROADCAST));
+                .registerReceiver(mCustomReceiver,
+                        new IntentFilter(ACTION_CUSTOM_BROADCAST));
 
 
+        //Initializing the notification service using getSystemService
+        createNotificationChannel();
+
+
+        long repeatInterval = AlarmManager.INTERVAL_DAY;
+
+        //Breakfast alarm and notification
+        //
+        //
+        Intent notifyBreakfastIntent = new Intent(this, AlarmReceiver.class);
+        notifyBreakfastIntent.putExtra("intentKey", 0);
+        PendingIntent notifyBreakfastPendingIntent = PendingIntent.getBroadcast
+                (this, BREAKFAST_NOTIFICATION_ID, notifyBreakfastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        AlarmManager breakfastAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        // Set the alarm to start at approximately 7:00 a.m.
+        Calendar breakfastCalendar = Calendar.getInstance();
+        breakfastCalendar.setTimeInMillis(System.currentTimeMillis());
+        breakfastCalendar.set(Calendar.HOUR_OF_DAY, 7);
+
+
+
+        breakfastAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, breakfastCalendar.getTimeInMillis(), repeatInterval, notifyBreakfastPendingIntent);
+        //Lunch alarm and notification
+        //
+        //
+        Intent notifyLunchIntent = new Intent(this, AlarmReceiver.class);
+        notifyLunchIntent.putExtra("intentKey", 1);
+        PendingIntent notifyLunchPendingIntent = PendingIntent.getBroadcast
+                (this, LUNCH_NOTIFICATION_ID, notifyLunchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        AlarmManager lunchAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        // Set the alarm to start at approximately 11:00 a.m.
+        Calendar lunchCalendar = Calendar.getInstance();
+        lunchCalendar.setTimeInMillis(System.currentTimeMillis());
+        lunchCalendar.set(Calendar.HOUR_OF_DAY, 11);
+
+        lunchAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, lunchCalendar.getTimeInMillis(), repeatInterval, notifyLunchPendingIntent);
+        //Supper alarm and notification
+        //
+        //
+        Intent notifySupperIntent = new Intent(this, AlarmReceiver.class);
+        notifySupperIntent.putExtra("intentKey", 2);
+        PendingIntent notifySupperPendingIntent = PendingIntent.getBroadcast
+                (this, SUPPER_NOTIFICATION_ID, notifySupperIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        AlarmManager supperAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        // Set the alarm to start at approximately 5:00 p.m.
+        Calendar supperCalendar = Calendar.getInstance();
+        supperCalendar.setTimeInMillis(System.currentTimeMillis());
+        supperCalendar.set(Calendar.HOUR_OF_DAY, 17);
+
+        supperAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, supperCalendar.getTimeInMillis(), repeatInterval, notifySupperPendingIntent);
+
+
+    }
+
+    /**
+     * Creates a Notification channel, for OREO and higher.
+     */
+    public void createNotificationChannel() {
+
+        // Create a notification manager object.
+        mNotificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Notification channels are only available in OREO and higher.
+        // So, add a check on SDK version.
+        if (android.os.Build.VERSION.SDK_INT >=
+                android.os.Build.VERSION_CODES.O) {
+
+            // Create the NotificationChannel with all the parameters.
+            NotificationChannel notificationChannel = new NotificationChannel
+                    (PRIMARY_CHANNEL_ID,
+                            "Stand up notification",
+                            NotificationManager.IMPORTANCE_HIGH);
+
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setDescription
+                    ("Notifies every 15 minutes to stand up and walk");
+            mNotificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 
     @Override
@@ -165,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         //Unregister the receiver
         this.unregisterReceiver(mReceiver);
         LocalBroadcastManager.getInstance(this)
-          .unregisterReceiver(mCustomReceiver);
+                .unregisterReceiver(mCustomReceiver);
 
         super.onDestroy();
     }
