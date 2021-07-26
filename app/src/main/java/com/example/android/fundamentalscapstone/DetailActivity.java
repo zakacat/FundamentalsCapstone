@@ -240,6 +240,7 @@ public class DetailActivity extends AppCompatActivity {
                 //However, this only works with the files the recipes that are added. This does not work with starter data...maybe I need to create a new file on startup ...
                 sendIntent.setType("image/*");
                 sendIntent.putExtra("sms_body", mBriefDescription + "To get access to the full recipe, download Zakacat's Recipe App from the  Google Play Store.");
+                sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, "com.example.android.fundamentalscapstone", (new File(mImageResource))));
                 //Currently, this intent will send all the info in a SMS/MMS message, but only the picture when sendig through other media.
                 Intent chooser = Intent.createChooser(sendIntent, "Share this recipe with...");

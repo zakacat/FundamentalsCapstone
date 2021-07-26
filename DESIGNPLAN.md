@@ -516,4 +516,14 @@ ItemTouchHelper| check (and referenced twice)
 
 - *Although I am a bit disorientated, I think that I have successfully implemented the Notifications/Alarm Manager. I do not have settings for them, but I am not too concerened with that. I understand the principles of this concept and I would like to power on and finish this project (at least roughly) as soon as possible. I am ready to maybe do an online course or two and then go back to my other app that I would like to have ready for semester start as it will be being constructed alongside my other studies, and hopefully will be helpful to myself in many ways*
 
-- *Now I just need to figure out how I want to include the JobSheduler... Maybe here I can display the snackBar with "There are no background tasks that need to be carried out" or something like that...* 
+- *Now I just need to figure out how I want to include the JobSheduler... Maybe here I can display the snackBar with "There are no background tasks that need to be carried out" or something like that...*
+
+**July 26 / 2021**
+
+- *I am looking at JobScheduler on codelab and they have implemented a notification as the startJob(). I think that I will finally just try and display a snackbar with only text.*
+
+- *Okay, I got that to work. I needed to ensure that BIND_JOB_SERVICE was implemented in manifest with the appropriate class Job Service Class Name*
+
+- *This is a pretty annoying and useless implemenation of Job Service with no real utility, but I can come back to this later and clean it up if I like, but I am not really into that right now.*
+
+- *So, my next steps are then - code clean and documentation - then I am going to work on Unit Tests and debugging - then some various leftover items such as a custom ShapeDrawable and Landscape mode*

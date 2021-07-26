@@ -16,6 +16,10 @@ public class CustomReceiver extends BroadcastReceiver {
             BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
     private Activity mActivity;
 
+    public CustomReceiver(){
+
+    }
+
     public CustomReceiver(Activity activity) {
         super();
         mActivity = activity;
@@ -38,7 +42,7 @@ public class CustomReceiver extends BroadcastReceiver {
                 break;
             }
             case WifiManager.WIFI_STATE_DISABLING: {
-                toastMessage = "Wifi is disconnecting";
+                toastMessage = "Wifi is disconnecting";//This displays for whatever reason when I go to share. I am not too concerned at this point... I am trying to display my savvy.
                 Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -56,8 +60,9 @@ public class CustomReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals(ACTION_CUSTOM_BROADCAST)) {
             toastMessage = "Zakacat\'s Recipe App is attempting to share a recipe.";
-            Snackbar snackbar = Snackbar.make(context, mActivity.findViewById(R.id.activity_main), toastMessage, Snackbar.LENGTH_LONG);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(context, mActivity.findViewById(R.id.activity_main), toastMessage, Snackbar.LENGTH_LONG);
+//            snackbar.show();
+            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
         }
         //Display the toast.
 

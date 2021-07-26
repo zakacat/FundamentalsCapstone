@@ -19,6 +19,9 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int BREAKFAST_NOTIFICATION_ID = 0, LUNCH_NOTIFICATION_ID = 1, SUPPER_NOTIFICATION_ID = 2;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
+    private JobScheduler mScheduler;
+    private static final int JOB_ID = 0;
+    private AlarmManager breakfastAlarmManager, lunchAlarmManager, supperAlarmManager;
 
 
     @Override
@@ -175,60 +181,62 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
 
 
-        long repeatInterval = AlarmManager.INTERVAL_DAY;
+        if ((breakfastAlarmManager == null) || (lunchAlarmManager == null) || (supperAlarmManager == null)) {
+            long repeatInterval = AlarmManager.INTERVAL_DAY;
 
-        //Breakfast alarm and notification
-        //
-        //
-        Intent notifyBreakfastIntent = new Intent(this, AlarmReceiver.class);
-        notifyBreakfastIntent.putExtra("intentKey", 0);
-        PendingIntent notifyBreakfastPendingIntent = PendingIntent.getBroadcast
-                (this, BREAKFAST_NOTIFICATION_ID, notifyBreakfastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        AlarmManager breakfastAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        // Set the alarm to start at approximately 7:00 a.m.
-        Calendar breakfastCalendar = Calendar.getInstance();
-        breakfastCalendar.setTimeInMillis(System.currentTimeMillis());
-        breakfastCalendar.set(Calendar.HOUR_OF_DAY, 7);
+            //Breakfast alarm and notification
+            //
+            //
+            Intent notifyBreakfastIntent = new Intent(this, AlarmReceiver.class);
+            notifyBreakfastIntent.putExtra("intentKey", 0);
+            PendingIntent notifyBreakfastPendingIntent = PendingIntent.getBroadcast
+                    (this, BREAKFAST_NOTIFICATION_ID, notifyBreakfastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-
-        breakfastAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, breakfastCalendar.getTimeInMillis(), repeatInterval, notifyBreakfastPendingIntent);
-        //Lunch alarm and notification
-        //
-        //
-        Intent notifyLunchIntent = new Intent(this, AlarmReceiver.class);
-        notifyLunchIntent.putExtra("intentKey", 1);
-        PendingIntent notifyLunchPendingIntent = PendingIntent.getBroadcast
-                (this, LUNCH_NOTIFICATION_ID, notifyLunchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            breakfastAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            // Set the alarm to start at approximately 7:00 a.m.
+            Calendar breakfastCalendar = Calendar.getInstance();
+            breakfastCalendar.setTimeInMillis(System.currentTimeMillis());
+            breakfastCalendar.set(Calendar.HOUR_OF_DAY, 7);
 
 
-        AlarmManager lunchAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        // Set the alarm to start at approximately 11:00 a.m.
-        Calendar lunchCalendar = Calendar.getInstance();
-        lunchCalendar.setTimeInMillis(System.currentTimeMillis());
-        lunchCalendar.set(Calendar.HOUR_OF_DAY, 11);
-
-        lunchAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, lunchCalendar.getTimeInMillis(), repeatInterval, notifyLunchPendingIntent);
-        //Supper alarm and notification
-        //
-        //
-        Intent notifySupperIntent = new Intent(this, AlarmReceiver.class);
-        notifySupperIntent.putExtra("intentKey", 2);
-        PendingIntent notifySupperPendingIntent = PendingIntent.getBroadcast
-                (this, SUPPER_NOTIFICATION_ID, notifySupperIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            breakfastAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, breakfastCalendar.getTimeInMillis(), repeatInterval, notifyBreakfastPendingIntent);
+            //Lunch alarm and notification
+            //
+            //
+            Intent notifyLunchIntent = new Intent(this, AlarmReceiver.class);
+            notifyLunchIntent.putExtra("intentKey", 1);
+            PendingIntent notifyLunchPendingIntent = PendingIntent.getBroadcast
+                    (this, LUNCH_NOTIFICATION_ID, notifyLunchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        AlarmManager supperAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        // Set the alarm to start at approximately 5:00 p.m.
-        Calendar supperCalendar = Calendar.getInstance();
-        supperCalendar.setTimeInMillis(System.currentTimeMillis());
-        supperCalendar.set(Calendar.HOUR_OF_DAY, 17);
+            lunchAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            // Set the alarm to start at approximately 11:00 a.m.
+            Calendar lunchCalendar = Calendar.getInstance();
+            lunchCalendar.setTimeInMillis(System.currentTimeMillis());
+            lunchCalendar.set(Calendar.HOUR_OF_DAY, 11);
 
-        supperAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, supperCalendar.getTimeInMillis(), repeatInterval, notifySupperPendingIntent);
+            lunchAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, lunchCalendar.getTimeInMillis(), repeatInterval, notifyLunchPendingIntent);
+            //Supper alarm and notification
+            //
+            //
+            Intent notifySupperIntent = new Intent(this, AlarmReceiver.class);
+            notifySupperIntent.putExtra("intentKey", 2);
+            PendingIntent notifySupperPendingIntent = PendingIntent.getBroadcast
+                    (this, SUPPER_NOTIFICATION_ID, notifySupperIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+            supperAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            // Set the alarm to start at approximately 5:00 p.m.
+            Calendar supperCalendar = Calendar.getInstance();
+            supperCalendar.setTimeInMillis(System.currentTimeMillis());
+            supperCalendar.set(Calendar.HOUR_OF_DAY, 17);
+
+            supperAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, supperCalendar.getTimeInMillis(), repeatInterval, notifySupperPendingIntent);
+
+            //This is the code for the JobScheduler. It runs at onCreate.
+            scheduleJobs();
+        }
     }
 
     /**
@@ -270,6 +278,20 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void scheduleJobs() {
+
+        mScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+
+        ComponentName serviceName = new ComponentName(getPackageName(),
+                NotificationJobService.class.getName());
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, serviceName);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+
+        JobInfo myJobInfo = builder.build();
+        mScheduler.schedule(myJobInfo);
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
